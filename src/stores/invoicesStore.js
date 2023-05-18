@@ -25,28 +25,29 @@ function getRandomDate(startDate, endDate) {
      return randomDate.toDateString().split(" ").slice(1).join(" ");
 }
 
-console.log(getRandomDate(new Date(2020, 0, 1), new Date())); // Thu Jun 17 2027 23:13:22 GMT+0200
-
 export const preferences = persisted("preferences", [
      {
           id: 1,
           amount: 1800.91,
           randomId: radonId.id(),
           name: "Jerome yount",
-          dueDate: "19 Aug 2021",
+          dueDate: getRandomDate(new Date(2015, 0, 1), new Date()),
+          status: "Paid",
      },
      {
           id: 2,
           amount: 1800.91,
           randomId: radonId.id(),
           name: "Jake Bogan",
-          dueDate: "19 Aug 2021",
+          dueDate: getRandomDate(new Date(2015, 0, 1), new Date()),
+          status: "Pending",
      },
      {
           id: 3,
           amount: 1800.91,
           randomId: radonId.id(),
           name: "Jane Doe",
-          dueDate: "19 Aug 2021",
+          dueDate: getRandomDate(new Date(2015, 0, 1), new Date()),
+          status: "Draft",
      },
 ]);
