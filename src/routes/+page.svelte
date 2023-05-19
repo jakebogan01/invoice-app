@@ -94,29 +94,33 @@
           </div>
      </form>
 
-     {#each $preferences as invoices}
+     {#each $preferences as invoice}
           {#if startFiltering}
                {#each filterArray as status}
-                    {#if status == invoices.status}
+                    {#if status == invoice?.status}
                          <div>
-                              <p>#{invoices.randomId}</p>
-                              <p>{invoices.id}</p>
-                              <p>$ {invoices.amount}</p>
-                              <p>{invoices.name}</p>
-                              <p>Due {invoices.dueDate}</p>
-                              <p>{invoices.status}</p>
+                              <a href="/{invoice?.slug}" class="block">
+                                   <p>#{invoice?.slug}</p>
+                                   <p>{invoice?.id}</p>
+                                   <p>$ {invoice?.amount}</p>
+                                   <p>{invoice?.name}</p>
+                                   <p>Due {invoice?.dueDate}</p>
+                                   <p>{invoice?.status}</p>
+                              </a>
                          </div>
                          <hr>
                     {/if}
                {/each}
           {:else}
                <div>
-                    <p>#{invoices.randomId}</p>
-                    <p>{invoices.id}</p>
-                    <p>$ {invoices.amount}</p>
-                    <p>{invoices.name}</p>
-                    <p>Due {invoices.dueDate}</p>
-                    <p>{invoices.status}</p>
+                    <a href="/{invoice?.slug}" class="block">
+                         <p>#{invoice?.slug}</p>
+                         <p>{invoice?.id}</p>
+                         <p>$ {invoice?.amount}</p>
+                         <p>{invoice?.name}</p>
+                         <p>Due {invoice?.dueDate}</p>
+                         <p>{invoice?.status}</p>
+                    </a>
                </div>
                <hr>
           {/if}
