@@ -32,7 +32,7 @@ export const preferences = persisted("preferences", [
           randomId: radonId.id(),
           name: "Jerome yount",
           dueDate: getRandomDate(new Date(2015, 0, 1), new Date()),
-          status: "Paid",
+          status: "paid",
      },
      {
           id: 2,
@@ -40,7 +40,7 @@ export const preferences = persisted("preferences", [
           randomId: radonId.id(),
           name: "Jake Bogan",
           dueDate: getRandomDate(new Date(2015, 0, 1), new Date()),
-          status: "Pending",
+          status: "pending",
      },
      {
           id: 3,
@@ -48,6 +48,6 @@ export const preferences = persisted("preferences", [
           randomId: radonId.id(),
           name: "Jane Doe",
           dueDate: getRandomDate(new Date(2015, 0, 1), new Date()),
-          status: "Draft",
+          status: "draft",
      },
 ]);
