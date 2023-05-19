@@ -2,7 +2,7 @@
      import { preferences } from "../stores/invoicesStore";
 
      let startFiltering = false;
-     let filterInvoicesBy = [];
+     let filterArray = [];
      let checkboxValues = {
           paid: "paid",
           pending: "pending",
@@ -10,7 +10,7 @@
      }
 
      const checkForEmptyArray = () => {
-          if (filterInvoicesBy.length < 1) {
+          if (filterArray.length < 1) {
                startFiltering = false;
           }
      }
@@ -21,19 +21,19 @@
           if (event.target.checked) {
                // checked
                if (event.target.name == checkboxValues[event.target.name]) {
-                    if (filterInvoicesBy.length < 1) {
+                    if (filterArray.length < 1) {
                          startFiltering = true;
-                         filterInvoicesBy = [...filterInvoicesBy, checkboxValues[event.target.name]];
+                         filterArray = [...filterArray, checkboxValues[event.target.name]];
                     }
 
-                    filterInvoicesBy.forEach(value => {
+                    filterArray.forEach(value => {
                          if (value != checkboxValues[event.target.name]) {
                               startFiltering = true;
-                              filterInvoicesBy = [...filterInvoicesBy, checkboxValues[event.target.name]];
+                              filterArray = [...filterArray, checkboxValues[event.target.name]];
                               // for some reason duplicates are created here
                               // remove duplicates below
-                              let unique = [...new Set(filterInvoicesBy)];
-                              filterInvoicesBy = [...unique];
+                              let unique = [...new Set(filterArray)];
+                              filterArray = [...unique];
                          }
                          return
                     });
@@ -41,14 +41,14 @@
           } else {
                //unchecked
                if (event.target.name == checkboxValues[event.target.name]) {
-                    filterInvoicesBy.forEach(value => {
+                    filterArray.forEach(value => {
                          if (value == checkboxValues[event.target.name]) {
-                              let index = filterInvoicesBy.indexOf(checkboxValues[event.target.name]);
+                              let index = filterArray.indexOf(checkboxValues[event.target.name]);
                               if (index > -1) {
-                                   filterInvoicesBy.splice(index, 1);
+                                   filterArray.splice(index, 1);
                               }
 
-                              filterInvoicesBy = [...filterInvoicesBy];
+                              filterArray = [...filterArray];
                          }
                          return
                     });
@@ -96,7 +96,7 @@
 
      {#each $preferences as invoices}
           {#if startFiltering}
-               {#each filterInvoicesBy as status}
+               {#each filterArray as status}
                     {#if status == invoices.status}
                          <div>
                               <p>#{invoices.randomId}</p>
