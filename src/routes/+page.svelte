@@ -1,28 +1,59 @@
 <script>
      import { preferences } from "../stores/invoicesStore";
 
-     // need to reset startFiltering to false if filter is empty
      let startFiltering = false;
-     let filter = [];
-
+     let filterInvoicesBy = [];
      let checkboxValues = {
           paid: "paid",
           pending: "pending",
-          draft: "draft"
+          draft: "draft",
+     }
+
+     const checkForEmptyArray = () => {
+          if (filterInvoicesBy.length < 1) {
+               startFiltering = false;
+          }
      }
 
      const handleCheckbox = (event) => {
-          startFiltering = true;
+          checkForEmptyArray();
+
           if (event.target.checked) {
+               // checked
                if (event.target.name == checkboxValues[event.target.name]) {
-                    filter = [...filter, checkboxValues[event.target.name]];
-                    // check if filter array already has the value
-                    // if it does add the value
+                    if (filterInvoicesBy.length < 1) {
+                         startFiltering = true;
+                         filterInvoicesBy = [...filterInvoicesBy, checkboxValues[event.target.name]];
+                    }
+
+                    filterInvoicesBy.forEach(value => {
+                         if (value != checkboxValues[event.target.name]) {
+                              startFiltering = true;
+                              filterInvoicesBy = [...filterInvoicesBy, checkboxValues[event.target.name]];
+                              // for some reason duplicates are created here
+                              // remove duplicates below
+                              let unique = [...new Set(filterInvoicesBy)];
+                              filterInvoicesBy = [...unique];
+                         }
+                         return
+                    });
                }
           } else {
+               //unchecked
                if (event.target.name == checkboxValues[event.target.name]) {
-                    // check if filter array has the value
-                    // if it does remove value from array
+                    filterInvoicesBy.forEach(value => {
+                         if (value == checkboxValues[event.target.name]) {
+                              let index = filterInvoicesBy.indexOf(checkboxValues[event.target.name]);
+                              if (index > -1) {
+                                   filterInvoicesBy.splice(index, 1);
+                              }
+
+                              filterInvoicesBy = [...filterInvoicesBy];
+                         }
+                         return
+                    });
+
+                    checkForEmptyArray();
                }
           }
      }
@@ -56,7 +87,7 @@
                          </div>
                          <div class="flex items-center">
                               <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                              <label for="filter-mobile-category-2" class="ml-3 text-sm text-gray-500">Draft</label>
+                              <label for="filter-mobile-category-3" class="ml-3 text-sm text-gray-500">Draft</label>
                          </div>
                     </div>
                </div>
@@ -65,7 +96,7 @@
 
      {#each $preferences as invoices}
           {#if startFiltering}
-               {#each filter as status}
+               {#each filterInvoicesBy as status}
                     {#if status == invoices.status}
                          <div>
                               <p>#{invoices.randomId}</p>
