@@ -110,13 +110,13 @@
                {#each filterArray as status}
                     {#if status == invoice?.status}
                          <div>
-                              <a href="/{invoice?.slug}" class="block">
-                                   <p>#{invoice?.slug}</p>
-                                   <p>{invoice?.id}</p>
-                                   <p class="text-red-500">$ {amount[i]}</p>
-                                   <p>{invoice?.billToAddress?.name}</p>
-                                   <p>Due {invoice?.billToAddress?.dueDate}</p>
-                                   <p>{invoice?.status}</p>
+                              <a href="/{ invoice?.slug }" class="block">
+                                   <p>#{ invoice?.slug }</p>
+                                   <p>{ invoice?.id }</p>
+                                   <p class="text-red-500">$ { amount[i] }</p>
+                                   <p>{ invoice?.billToAddress?.name }</p>
+                                   <p>Due { invoice?.billToAddress?.dueDate }</p>
+                                   <p>{ invoice?.status }</p>
                               </a>
                          </div>
                          <hr>
@@ -124,13 +124,13 @@
                {/each}
           {:else}
                <div>
-                    <a href="/{invoice?.slug}" class="block">
-                         <p>#{invoice?.slug}</p>
-                         <p>{invoice?.id}</p>
-                         <p class="text-red-500">$ {amount[i]}</p>
-                         <p>{invoice?.billToAddress?.name}</p>
-                         <p>Due {invoice?.billToAddress?.dueDate}</p>
-                         <p>{invoice?.status}</p>
+                    <a href="/{ invoice?.slug }" class="block">
+                         <p>#{ invoice?.slug }</p>
+                         <p>{ invoice?.id }</p>
+                         <p class="text-red-500">$ { amount[i] }</p>
+                         <p>{ invoice?.billToAddress?.name }</p>
+                         <p>Due { invoice?.billToAddress?.dueDate }</p>
+                         <p>{ invoice?.status }</p>
                     </a>
                </div>
                <hr>
