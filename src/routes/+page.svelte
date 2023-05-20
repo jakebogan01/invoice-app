@@ -1,7 +1,8 @@
 <script>
      import { onMount } from "svelte";
      import { preferences } from "../stores/invoicesStore";
-     
+     import Form from "../components/Form.svelte";
+
      let amount = [];
 
      onMount(() => {
@@ -68,7 +69,14 @@
                }
           }
      }
-</script> 
+</script>
+
+<div class="px-4">
+     <button class="w-full bg-red-500 text-white">New Invoice</button>
+</div>
+
+
+<Form />
 
 <div class="space-y-4 px-4 bg-gray-900 text-white min-h-screen">
      <form class="mb-20">
