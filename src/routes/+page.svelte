@@ -1,7 +1,7 @@
 <script>
      import { onMount } from "svelte";
      import { preferences } from "../stores/invoicesStore";
-
+     
      let amount = [];
 
      onMount(() => {

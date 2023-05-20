@@ -17,7 +17,14 @@
      }
 
      const handleUpdateStatusToPaid = () => {
-          console.log('works');
+          preferences.update(currentInvoices => {
+               let copiedInvoices = [...currentInvoices];
+               let updatedInvoice = copiedInvoices.find(invoice => invoice?.slug === data?.slug);
+
+               updatedInvoice.status = "paid";
+
+               return copiedInvoices;
+          });
      }
 </script>
 
