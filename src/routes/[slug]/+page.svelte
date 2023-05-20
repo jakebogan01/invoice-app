@@ -10,9 +10,9 @@
                <div>
                     <p>#{invoice?.slug}</p>
                     <p>{invoice?.id}</p>
-                    <p>$ {invoice?.amount}</p>
-                    <p>{invoice?.name}</p>
-                    <p>Due {invoice?.dueDate}</p>
+                    <p class="text-red-500">$ {invoice?.billToAddress?.amount}</p>
+                    <p>{invoice?.billToAddress?.name}</p>
+                    <p>Due {invoice?.billToAddress?.dueDate}</p>
                     <p>{invoice?.status}</p>
                </div>
           {/if}
