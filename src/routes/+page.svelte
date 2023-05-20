@@ -1,5 +1,16 @@
 <script>
+     import { onMount } from "svelte";
      import { preferences } from "../stores/invoicesStore";
+
+     let amount = [];
+
+     onMount(() => {
+          // adding the amounts for each invoice
+          let sum = $preferences.map((item) => {
+               return item.billToAddress.items.reduce((n, {amount}) => n + amount, 0);
+          });
+          amount = [...sum];
+     })
 
      let startFiltering = false;
      let filterArray = [];
@@ -30,8 +41,8 @@
                          if (value != checkboxValues[event.target.name]) {
                               startFiltering = true;
                               filterArray = [...filterArray, checkboxValues[event.target.name]];
-                              // for some reason duplicates are created here
-                              // remove duplicates below
+                              // for some reason duplicates are being created here
+                              // solution to remove duplicates see below
                               let unique = [...new Set(filterArray)];
                               filterArray = [...unique];
                          }
@@ -94,7 +105,7 @@
           </div>
      </form>
 
-     {#each $preferences as invoice}
+     {#each $preferences as invoice, i}
           {#if startFiltering}
                {#each filterArray as status}
                     {#if status == invoice?.status}
@@ -102,7 +113,7 @@
                               <a href="/{invoice?.slug}" class="block">
                                    <p>#{invoice?.slug}</p>
                                    <p>{invoice?.id}</p>
-                                   <p class="text-red-500">$ {invoice?.billToAddress?.amount}</p>
+                                   <p class="text-red-500">$ {amount[i]}</p>
                                    <p>{invoice?.billToAddress?.name}</p>
                                    <p>Due {invoice?.billToAddress?.dueDate}</p>
                                    <p>{invoice?.status}</p>
@@ -116,7 +127,7 @@
                     <a href="/{invoice?.slug}" class="block">
                          <p>#{invoice?.slug}</p>
                          <p>{invoice?.id}</p>
-                         <p class="text-red-500">$ {invoice?.billToAddress?.amount}</p>
+                         <p class="text-red-500">$ {amount[i]}</p>
                          <p>{invoice?.billToAddress?.name}</p>
                          <p>Due {invoice?.billToAddress?.dueDate}</p>
                          <p>{invoice?.status}</p>
