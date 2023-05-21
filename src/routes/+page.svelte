@@ -3,6 +3,7 @@
      import { preferences } from "../stores/invoicesStore";
      import Form from "../components/Form.svelte";
 
+     let showForm = false;
      let amount = [];
 
      onMount(() => {
@@ -72,11 +73,12 @@
 </script>
 
 <div class="px-4">
-     <button class="w-full bg-red-500 text-white">New Invoice</button>
+     <button class="w-full bg-red-500 text-white" on:click={ () => { showForm = true } }>New Invoice</button>
 </div>
 
-
-<Form />
+{#if showForm}
+     <Form on:click={ () => { showForm = false } } />
+{/if}
 
 <div class="space-y-4 px-4 bg-gray-900 text-white min-h-screen">
      <form class="mb-20">
