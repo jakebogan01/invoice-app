@@ -2,7 +2,6 @@
      import { preferences } from "../stores/invoicesStore";
      import { goto } from '$app/navigation';
      import { DateInput } from 'date-picker-svelte'
-     import { afterUpdate } from "svelte";
      
      let date = new Date();
      let showPaymentTerms = false;
@@ -14,7 +13,7 @@
                name: "",
                qty: null,
                price: null,
-               // test: qty * price
+               total: null
           }
      ];
 
@@ -34,10 +33,6 @@
                arrayOfItems = [...arrayOfItems];
           }
      }
-
-     afterUpdate(()=>{
-          console.log(arrayOfItems.test)
-     })
 
      class GenerateRandomSlug {
           getSlug() {
@@ -88,6 +83,10 @@
      }
 
      const handleCreateInvoice = (id) => {
+          arrayOfItems.map((item) => {
+               item.total = item.qty * item.price;
+          })
+
           let newInvoice = {
                id: id,
                status: "paid",
@@ -126,7 +125,7 @@
                     console.log(currentInvoices);
           });
 
-          // goto("/");
+          goto("/");
      }
 </script>
 

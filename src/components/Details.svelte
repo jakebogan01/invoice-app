@@ -9,9 +9,7 @@
           // adding the amounts for each item and qty
           let sum = $preferences.map((item) => {
                if (item?.slug === data?.slug) {
-                    // fix quantity below to seperate the qty's for each item
-                    let quantity = item.billToAddress.items.reduce((n, {qty}) => n + qty, 0);
-                    return item.billToAddress.items.reduce((n, {amount}) => n + (amount * quantity), 0);
+                    return item.billToAddress.items.reduce((n, {total}) => n + total, 0);
                }
           });
 
@@ -66,8 +64,8 @@
                                    <p>ID: { item?.id }</p>
                                    <p>ID: { item?.name }</p>
                                    <p>Qty.: { item?.qty }</p>
-                                   <p>Price: { item?.amount }</p>
-                                   <p>Total: { item.amount * item?.qty }</p>
+                                   <p>Price: { item?.price }</p>
+                                   <p>Total: { item?.total }</p>
                               </div>
                          {/each}
                     </div>

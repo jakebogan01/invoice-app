@@ -9,7 +9,7 @@
      onMount(() => {
           // adding the amounts for each invoice
           let sum = $preferences.map((item) => {
-               return item.billToAddress.items.reduce((n, {amount}) => n + amount, 0);
+               return item.billToAddress.items.reduce((n, {total}) => n + total, 0);
           });
           amount = [...sum];
      })
