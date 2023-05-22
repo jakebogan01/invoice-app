@@ -2,9 +2,42 @@
      import { preferences } from "../stores/invoicesStore";
      import { goto } from '$app/navigation';
      import { DateInput } from 'date-picker-svelte'
+     import { afterUpdate } from "svelte";
      
      let date = new Date();
      let showPaymentTerms = false;
+
+     let formItemField = {newTaskSubtask: []};
+     let numberOfColumns = [1];
+     let arrayOfItems = [
+          { 
+               name: "",
+               qty: null,
+               price: null,
+               // test: qty * price
+          }
+     ];
+
+     const addColumnOptions = (i, x, viewingTask) => {
+          const index = numberOfColumns.indexOf(i);
+          if (viewingTask && index > -1) {
+               numberOfColumns.splice(index, 1);
+               formItemField.newTaskSubtask.splice(x, 1);
+               numberOfColumns = [...numberOfColumns];
+               formItemField.newTaskSubtask = [...formItemField.newTaskSubtask];
+               return;
+          }
+          if (index > -1) {
+               numberOfColumns.splice(index, 1);
+               arrayOfItems.splice(x, 1);
+               numberOfColumns = [...numberOfColumns];
+               arrayOfItems = [...arrayOfItems];
+          }
+     }
+
+     afterUpdate(()=>{
+          console.log(arrayOfItems.test)
+     })
 
      class GenerateRandomSlug {
           getSlug() {
@@ -26,7 +59,7 @@
                street: "",
                city: "",
                state: "",
-               zip: null,
+               zip: null
           },
           to: {
                name: "",
@@ -39,14 +72,7 @@
                dueDate: "",
                daysLeft: null,
                dueDateAnnouncement: "Next 30 Days",
-               description: "",
-               items: [
-                    {
-                         name: "",
-                         qty: null,
-                         amount: null,
-                    },
-               ],
+               description: ""
           }
      }
 
@@ -82,20 +108,7 @@
                     invoiceDate: formFields.to.invoiceDate,
                     dueDate: formFields.to.dueDate,
                     description: formFields.to.description,
-                    items: [
-                         {
-                              id: 1,
-                              name: "Banner Design",
-                              qty: 2,
-                              amount: 150.0,
-                         },
-                         {
-                              id: 2,
-                              name: "Email Design",
-                              qty: 1,
-                              amount: 400.0,
-                         },
-                    ],
+                    items: [...arrayOfItems],
                },
           };
 
@@ -244,27 +257,30 @@
           <div class="border-b border-gray-900/10 pb-12">
                <h2 class="text-base font-semibold leading-7 text-gray-900">Item List</h2>
                
-               <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="sm:col-span-3">
-                         <label for="item-name" class="block text-sm font-medium leading-6 text-gray-900">Item Name</label>
-                         <div class="mt-2">
-                              <input type="text" name="item-name" id="item-name" autocomplete="false" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                         </div>
-                    </div>
-                    <div class="sm:col-span-3">
-                         <label for="qty" class="block text-sm font-medium leading-6 text-gray-900">Qty.</label>
-                         <div class="mt-2">
-                              <input type="text" name="qty" id="qty" autocomplete="false" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                         </div>
-                    </div>
-                    <div class="sm:col-span-3">
-                         <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
-                         <div class="mt-2">
-                              <input type="text" name="price" id="price" autocomplete="false" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                         </div>
+               <div class="mt-5">
+                    <span class="block text-xs font-bold leading-6 text-[#828FA3]">Columns</span>
+                    <div class="mt-2 space-y-4">
+                         {#each numberOfColumns as item, i}
+                              <div class="flex items-center space-x-4">
+                                   <input type="text" bind:value={ arrayOfItems[i].name } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" bind:value={ arrayOfItems[i].qty } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" bind:value={ arrayOfItems[i].price } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <button type="button" on:click={ () => { addColumnOptions(item, i) } } class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                        <span class="sr-only">Close</span>
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                   </button>
+                              </div>
+                         {/each}
                     </div>
                </div>
-
+               <button type="button" on:click={ () => { numberOfColumns = [...numberOfColumns, numberOfColumns.length + 1]; arrayOfItems.push({name: "", qty: null, price: null, test: name}) } } class="inline-flex w-full justify-center items-center rounded-md bg-[#635FC7] bg-opacity-20 px-3 h-10 text-sm font-semibold text-[#635FC7] hover:text-white shadow-sm hover:bg-opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2">
+                    <span class="flex items-center space-x-1">
+                         <span>
+                              <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.11001 8V5.09H0.200012V3.395H3.11001V0.5H4.80501V3.395H7.70001V5.09H4.80501V8H3.11001Z" fill="currentColor"/></svg>
+                         </span>
+                         <span>Add New Column</span>
+                    </span>
+               </button>
           </div>
      </div>
    

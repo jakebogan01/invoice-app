@@ -5,12 +5,10 @@
 
      let showForm = false;
      let amount = [];
-     // let invoices = [];
 
      onMount(() => {
           // adding the amounts for each invoice
           let sum = $preferences.map((item) => {
-               // invoices = [...invoices, item];
                return item.billToAddress.items.reduce((n, {amount}) => n + amount, 0);
           });
           amount = [...sum];
@@ -117,7 +115,7 @@
           </div>
      </form>
 
-     {#each $preferences as invoice}
+     {#each $preferences as invoice, i}
           {#if startFiltering}
                {#each filterArray as status}
                     {#if status == invoice?.status}
@@ -125,7 +123,7 @@
                               <a href="/{ invoice?.slug }" class="block">
                                    <p>#{ invoice?.slug }</p>
                                    <p>{ invoice?.id }</p>
-                                   <!-- <p class="text-red-500">$ { amount[i] }</p> -->
+                                   <p class="text-red-500">$ { amount[i] }</p>
                                    <p>{ invoice?.billToAddress?.name }</p>
                                    <p>Due { invoice?.billToAddress?.dueDate }</p>
                                    <p>{ invoice?.status }</p>
@@ -139,7 +137,7 @@
                     <a href="/{ invoice?.slug }" class="block">
                          <p>#{ invoice?.slug }</p>
                          <p>{ invoice?.id }</p>
-                         <!-- <p class="text-red-500">$ { amount[i] }</p> -->
+                         <p class="text-red-500">$ { amount[i] }</p>
                          <p>{ invoice?.billToAddress?.name }</p>
                          <p>Due { invoice?.billToAddress?.dueDate }</p>
                          <p>{ invoice?.status }</p>
