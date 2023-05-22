@@ -2,7 +2,6 @@
      import { preferences } from "../stores/invoicesStore";
      import { goto } from '$app/navigation';
      import { DateInput } from 'date-picker-svelte'
-     import { xlink_attr } from "svelte/internal";
      
      let date = new Date();
      let showPaymentTerms = false;
@@ -106,7 +105,7 @@
 
           const checkField = (x, y, m, n) => {
                if (n) {
-                    if (/^\d+$/.test(formFields[x][y].trim())) {
+                    if (!/^\d+$/.test(formFields[x][y].trim()) || formFields[x][y].trim().length <= 4 || formFields[x][y].trim().length > 5) {
                          valid = false;
                          errors[x][y] = m;
 
@@ -134,7 +133,10 @@
                checkField(type, property, "can't be empty");
                break;
                case "from-zip":
-               checkField(type, property, "must be a number", true);
+               checkField(type, property, "invalid zip / postal code", true);
+               break;
+               case "to-name":
+               checkField(type, property, "can't be empty");
                break;
           }
      }
@@ -234,7 +236,7 @@
                     <div class="sm:col-span-3">
                          <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Client's name</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.to.name } name="name" id="name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("to-name", "to", "name") } } bind:value={ formFields.to.name } name="name" id="name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.name}</p>
                     </div>
