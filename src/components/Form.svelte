@@ -86,6 +86,11 @@
                state: "",
                zip: "",
                description: ""
+          },
+          items: {
+               name: "",
+               qty: "",
+               price: ""
           }
       };
 
@@ -138,12 +143,58 @@
                case "to-name":
                checkField(type, property, "can't be empty");
                break;
+               case "to-email":
+               checkField(type, property, "can't be empty");
+               break;
+               case "to-street":
+               checkField(type, property, "can't be empty");
+               break;
+               case "to-city":
+               checkField(type, property, "can't be empty");
+               break;
+               case "to-state":
+               checkField(type, property, "can't be empty");
+               break;
+               case "to-zip":
+               checkField(type, property, "invalid zip / postal code", true);
+               break;
+               case "to-description":
+               checkField(type, property, "can't be empty");
+               break;
           }
+
+          arrayOfItems.forEach((item) => {
+               if (field === "item-name") {
+                    if (item.name.trim().length < 2) {
+                         valid = false;
+                         errors.items.name = "can't be empty";
+                    } else {
+                         errors.items.name = "";
+                    }
+               }
+               if (field === "item-qty") {
+                    if (!/^\d+$/.test(item.qty) || item.qty.trim().length < 2) {
+                         valid = false;
+                         errors.items.qty = "invalid qty.";
+                    } else {
+                         errors.items.qty = "";
+                    }
+               }
+               if (field === "item-price") {
+                    if (!/^\d+$/.test(item.price) || item.price.trim().length < 2) {
+                         valid = false;
+                         errors.items.price = "invalid price.";
+                    } else {
+                         errors.items.price = "";
+                    }
+               }
+          })
      }
 
      const handleCreateInvoice = (id) => {
           arrayOfItems.map((item) => {
                item.total = item.qty * item.price;
+               item.total.trim().toLowerCase();
           })
 
           let newInvoice = {
@@ -151,21 +202,21 @@
                status: "paid",
                slug: radonSlug.getSlug(),
                billFromAddress: {
-                    street: formFields.from.street,
-                    city: formFields.from.city,
-                    state: formFields.from.state,
+                    street: formFields.from.street.trim().toLowerCase(),
+                    city: formFields.from.city.trim().toLowerCase(),
+                    state: formFields.from.state.trim().toLowerCase(),
                     zip: formFields.from.zip,
                },
                billToAddress: {
-                    name: formFields.to.name,
-                    email: formFields.to.email,
-                    street: formFields.to.street,
-                    city: formFields.to.city,
-                    state: formFields.to.state,
+                    name: formFields.to.name.trim().toLowerCase(),
+                    email: formFields.to.email.trim().toLowerCase(),
+                    street: formFields.to.street.trim().toLowerCase(),
+                    city: formFields.to.city.trim().toLowerCase(),
+                    state: formFields.to.state.trim().toLowerCase(),
                     zip: formFields.to.zip,
                     invoiceDate: formFields.to.invoiceDate,
                     dueDate: formFields.to.dueDate,
-                    description: formFields.to.description,
+                    description: formFields.to.description.trim().toLowerCase(),
                     items: [...arrayOfItems],
                },
           };
@@ -223,7 +274,7 @@
                     <div class="sm:col-span-2">
                          <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("from-zip", "from", "zip") } } bind:value={ formFields.from.zip } name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("from-zip", "from", "zip") } } bind:value={ formFields.from.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.from.zip}</p>
                     </div>
@@ -244,7 +295,7 @@
                     <div class="sm:col-span-4">
                          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                          <div class="mt-2">
-                              <input id="email" bind:value={ formFields.to.email } name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input id="email" on:change={ () => { test("to-email", "to", "email") } } bind:value={ formFields.to.email } name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.email}</p>
                     </div>
@@ -252,7 +303,7 @@
                     <div class="col-span-full">
                          <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.to.street } name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("to-street", "to", "street") } } bind:value={ formFields.to.street } name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.street}</p>
                     </div>
@@ -260,7 +311,7 @@
                     <div class="sm:col-span-2 sm:col-start-1">
                          <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.to.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("to-city", "to", "city") } } bind:value={ formFields.to.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.city}</p>
                     </div>
@@ -268,7 +319,7 @@
                     <div class="sm:col-span-2">
                          <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.to.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("to-state", "to", "state") } } bind:value={ formFields.to.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.state}</p>
                     </div>
@@ -276,7 +327,7 @@
                     <div class="sm:col-span-2">
                          <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.to.zip } name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("to-zip", "to", "zip") } } bind:value={ formFields.to.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.zip}</p>
                     </div>
@@ -318,7 +369,7 @@
                <div>
                     <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Project Description</label>
                     <div class="mt-2">
-                         <input type="text" bind:value={ formFields.to.description } name="description" id="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                         <input type="text" on:change={ () => { test("to-description", "to", "description") } } bind:value={ formFields.to.description } name="description" id="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
                     <p class="text-red-500">{errors.to.description}</p>
                </div>
@@ -333,15 +384,20 @@
                     <div class="mt-2 space-y-4">
                          {#each numberOfColumns as item, i}
                               <div class="flex items-center space-x-4">
-                                   <input type="text" bind:value={ arrayOfItems[i].name } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
-                                   <input type="text" bind:value={ arrayOfItems[i].qty } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
-                                   <input type="text" bind:value={ arrayOfItems[i].price } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
-                                   <button type="button" on:click={ () => { addColumnOptions(item, i) } } class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                        <span class="sr-only">Close</span>
-                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                                   </button>
+                                   <input type="text" on:change={ () => { test("item-name") } } bind:value={ arrayOfItems[i].name } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" on:change={ () => { test("item-qty") } } bind:value={ arrayOfItems[i].qty } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" on:change={ () => { test("item-price") } } bind:value={ arrayOfItems[i].price } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   {#if i >= 1}
+                                        <button type="button" on:click={ () => { addColumnOptions(item, i) } } class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                             <span class="sr-only">Close</span>
+                                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                   {/if}
                               </div>
                          {/each}
+                         <p class="text-red-500">{errors.items.name}</p>
+                         <p class="text-red-500">{errors.items.qty}</p>
+                         <p class="text-red-500">{errors.items.price}</p>
                     </div>
                </div>
                <button type="button" on:click={ () => { numberOfColumns = [...numberOfColumns, numberOfColumns.length + 1]; arrayOfItems.push({name: "", qty: null, price: null, test: name}) } } class="inline-flex w-full justify-center items-center rounded-md bg-[#635FC7] bg-opacity-20 px-3 h-10 text-sm font-semibold text-[#635FC7] hover:text-white shadow-sm hover:bg-opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2">
