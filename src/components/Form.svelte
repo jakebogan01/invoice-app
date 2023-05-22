@@ -2,9 +2,11 @@
      import { preferences } from "../stores/invoicesStore";
      import { goto } from '$app/navigation';
      import { DateInput } from 'date-picker-svelte'
+     import { xlink_attr } from "svelte/internal";
      
      let date = new Date();
      let showPaymentTerms = false;
+     let valid = false;
 
      let formItemField = {newTaskSubtask: []};
      let numberOfColumns = [1];
@@ -16,7 +18,6 @@
                total: null
           }
      ];
-
      const addColumnOptions = (i, x, viewingTask) => {
           const index = numberOfColumns.indexOf(i);
           if (viewingTask && index > -1) {
@@ -54,7 +55,7 @@
                street: "",
                city: "",
                state: "",
-               zip: null
+               zip: ""
           },
           to: {
                name: "",
@@ -65,11 +66,29 @@
                zip: null,
                invoiceDate: date.toDateString().split(" ").slice(1).join(" "),
                dueDate: "",
-               daysLeft: null,
+               daysLeft: 30,
                dueDateAnnouncement: "Next 30 Days",
                description: ""
           }
      }
+
+     let errors = { 
+          from: {
+               street: "",
+               city: "",
+               state: "",
+               zip: ""
+          },
+          to: {
+               name: "",
+               email: "",
+               street: "",
+               city: "",
+               state: "",
+               zip: "",
+               description: ""
+          }
+      };
 
      const updatePaymentTerms = (event) => {
           formFields.to.dueDateAnnouncement = `Next ${event.target.innerHTML} Days`;
@@ -80,6 +99,44 @@
           formFields.to.dueDate = result.toDateString().split(" ").slice(1).join(" ");
 
           showPaymentTerms = false;
+     }
+
+     const test = (field, type, property) => {
+          valid = true;
+
+          const checkField = (x, y, m, n) => {
+               if (n) {
+                    if (/^\d+$/.test(formFields[x][y].trim())) {
+                         valid = false;
+                         errors[x][y] = m;
+
+                    } else {
+                         errors[x][y] = "";
+                    }
+               } else {
+                    if (formFields[x][y].trim().length < 2) {
+                         valid = false;
+                         errors[x][y] = m;
+                    } else {
+                         errors[x][y] = "";
+                    }
+               }
+          }
+
+          switch (field) {
+               case "from-address":
+               checkField(type, property, "can't be empty");
+               break;
+               case "from-city":
+               checkField(type, property, "can't be empty");
+               break;
+               case "from-state":
+               checkField(type, property, "can't be empty");
+               break;
+               case "from-zip":
+               checkField(type, property, "must be a number", true);
+               break;
+          }
      }
 
      const handleCreateInvoice = (id) => {
@@ -111,21 +168,23 @@
                },
           };
 
-          preferences.update(currentInvoices => {
-               currentInvoices.forEach((invoice) => {
-                    if (invoice.id === id) {
-                         newInvoice.id += 1;
-                    }
+          if (valid) {
+               preferences.update(currentInvoices => {
+                    currentInvoices.forEach((invoice) => {
+                         if (invoice.id === id) {
+                              newInvoice.id += 1;
+                         }
+                    });
+                    
+                    return [...currentInvoices, newInvoice];
                });
-               
-               return [...currentInvoices, newInvoice];
-          });
 
-          preferences.update(currentInvoices => {
+               preferences.update(currentInvoices => {
                     console.log(currentInvoices);
-          });
+               });
 
-          goto("/");
+               goto("/");
+          }
      }
 </script>
 
@@ -138,29 +197,33 @@
                     <div class="col-span-full">
                          <label for="from-street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.from.street } name="from-street-address" id="from-street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("from-address", "from", "street") } } bind:value={ formFields.from.street } name="from-street-address" id="from-street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.from.street}</p>
                     </div>
 
                     <div class="sm:col-span-2 sm:col-start-1">
                          <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.from.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("from-city", "from", "city") } } bind:value={ formFields.from.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.from.city}</p>
                     </div>
 
                     <div class="sm:col-span-2">
                          <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.from.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("from-state", "from", "state") } } bind:value={ formFields.from.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.from.state}</p>
                     </div>
 
                     <div class="sm:col-span-2">
                          <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
                          <div class="mt-2">
-                              <input type="text" bind:value={ formFields.from.zip } name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { test("from-zip", "from", "zip") } } bind:value={ formFields.from.zip } name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.from.zip}</p>
                     </div>
                </div>
           </div>
@@ -173,6 +236,7 @@
                          <div class="mt-2">
                               <input type="text" bind:value={ formFields.to.name } name="name" id="name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.to.name}</p>
                     </div>
 
                     <div class="sm:col-span-4">
@@ -180,6 +244,7 @@
                          <div class="mt-2">
                               <input id="email" bind:value={ formFields.to.email } name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.to.email}</p>
                     </div>
 
                     <div class="col-span-full">
@@ -187,6 +252,7 @@
                          <div class="mt-2">
                               <input type="text" bind:value={ formFields.to.street } name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.to.street}</p>
                     </div>
 
                     <div class="sm:col-span-2 sm:col-start-1">
@@ -194,6 +260,7 @@
                          <div class="mt-2">
                               <input type="text" bind:value={ formFields.to.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.to.city}</p>
                     </div>
 
                     <div class="sm:col-span-2">
@@ -201,6 +268,7 @@
                          <div class="mt-2">
                               <input type="text" bind:value={ formFields.to.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.to.state}</p>
                     </div>
 
                     <div class="sm:col-span-2">
@@ -208,6 +276,7 @@
                          <div class="mt-2">
                               <input type="text" bind:value={ formFields.to.zip } name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
+                         <p class="text-red-500">{errors.to.zip}</p>
                     </div>
                </div>
 
@@ -249,6 +318,7 @@
                     <div class="mt-2">
                          <input type="text" bind:value={ formFields.to.description } name="description" id="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
+                    <p class="text-red-500">{errors.to.description}</p>
                </div>
                
           </div>
