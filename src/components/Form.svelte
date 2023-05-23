@@ -2,6 +2,7 @@
      import { preferences } from "../stores/invoicesStore";
      import { DateInput } from 'date-picker-svelte'
      
+     export let showForm;
      let date = new Date();
      let showPaymentTerms = false;
      let valid = false;
@@ -233,6 +234,8 @@
                     
                     return [...currentInvoices, newInvoice];
                });
+
+               showForm = false;
           }
      }
 </script>
@@ -408,7 +411,7 @@
      </div>
    
      <div class="mt-6 flex items-center justify-end gap-x-6">
-          <button on:click type="button" class="text-sm font-semibold leading-6 text-gray-900">Discard</button>
+          <button on:click={ () => { showForm = false } } type="button" class="text-sm font-semibold leading-6 text-gray-900">Discard</button>
           <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save & Send</button>
      </div>
 </form>

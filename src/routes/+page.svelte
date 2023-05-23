@@ -77,7 +77,7 @@
 </div>
 
 {#if showForm}
-     <Form on:click={ () => { showForm = false } } />
+     <Form bind:showForm={showForm} />
 {/if}
 
 <div class="space-y-4 px-4 bg-gray-900 text-white min-h-screen">
