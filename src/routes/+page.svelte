@@ -1,6 +1,7 @@
 <script>
      import { onMount } from "svelte";
      import { preferences } from "../stores/invoicesStore";
+     import { theme } from "../stores/darkThemeStore";
      import Form from "../components/Form.svelte";
 
      let showForm = false;
@@ -70,6 +71,14 @@
                }
           }
      }
+
+     // const test = () => {
+     //      theme.update(currentTheme => {
+     //           currentTheme[0].theme = "dark";
+
+     //           return currentTheme;
+     //      });
+     // }
 </script>
 
 <div class="px-4">
