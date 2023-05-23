@@ -10,6 +10,8 @@
 </script>
 
 <div class="font-spartan font-medium {themeMode}">
-     <Nav />
-     <slot />
+     <div class="dark:bg-[#141625] min-h-screen">
+          <Nav />
+          <slot />
+     </div>
 </div>

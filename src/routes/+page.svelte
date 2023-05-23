@@ -1,7 +1,6 @@
 <script>
      import { onMount } from "svelte";
      import { preferences } from "../stores/invoicesStore";
-     import { theme } from "../stores/darkThemeStore";
      import Form from "../components/Form.svelte";
 
      let showForm = false;
@@ -72,21 +71,13 @@
                }
           }
      }
-
-     // const test = () => {
-     //      theme.update(currentTheme => {
-     //           currentTheme[0].theme = "dark";
-
-     //           return currentTheme;
-     //      });
-     // }
 </script>
 
 <main class="px-6">
      <section class="flex justify-between items-center my-8">
           <div>
-               <h1 class="font-bold text-[#0C0E16] text-2xl leading-[1.5625rem]">Invoices</h1>
-               <span class="text-13 text-[#888DB1]">{ $preferences.length } Invoices</span>
+               <h1 class="font-bold text-[#0C0E16] dark:text-white text-2xl leading-[1.5625rem]">Invoices</h1>
+               <span class="text-13 text-[#888DB1] dark:text-[#DFE3FA]">{ $preferences.length } Invoices</span>
           </div>
 
           <div class="flex items-center">
@@ -94,24 +85,24 @@
                     <div class="relative">
                          <h3 class="flow-root">
                               <button on:click={ () => { openFilter = !openFilter } } type="button" class="flex w-full items-center justify-between px-2 py-3 text-sm text-gray-400" aria-controls="filter-section-0" aria-expanded="false">
-                                   <span class="font-bold text-15 text-[#0C0E16]">Filter</span>
+                                   <span class="font-bold text-15 text-[#0C0E16] dark:text-white">Filter</span>
                                    <span class="ml-1.5 flex items-center text-[#7C5DFA] {openFilter ? "rotate-180" : "rotate-0"}">
                                         <svg class="rotate-0 h-5 w-5 transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>
                                    </span>
                               </button>
                          </h3>
                          {#if openFilter}
-                              <div class="absolute top-12 right-0 bg-white shadow-lg w-[12rem] p-6 text-15 font-bold text-[#1F2139] rounded-xl space-y-4" id="filter-section-0">
+                              <div class="absolute top-12 right-0 bg-white dark:bg-[#252945] shadow-lg w-[12rem] p-6 text-15 font-bold text-[#1F2139] dark:text-white rounded-xl space-y-4" id="filter-section-0">
                                    <div class="flex items-center">
-                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                         <label for="filter-mobile-category-0" class="ml-3">Paid</label>
                                    </div>
                                    <div class="flex items-center">
-                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                         <label for="filter-mobile-category-1" class="ml-3">Pending</label>
                                    </div>
                                    <div class="flex items-center">
-                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                         <label for="filter-mobile-category-3" class="ml-3">Draft</label>
                                    </div>
                               </div>
@@ -137,38 +128,62 @@
                {#if startFiltering}
                     {#each filterArray as status}
                          {#if status == invoice?.status}
-                              <div class="bg-white rounded-lg overflow-hidden">
+                              <div class="bg-white dark:bg-[#1F2139] rounded-lg overflow-hidden">
                                    <a href="/{ invoice?.slug }" class="flex justify-between items-start py-7 px-6">
                                         <div>
-                                             <p class="font-bold text-15 text-[#7D88C2]">#<span class="text-[#0C0E16]">{ invoice?.slug }</span></p>
-                                             <p class="font-medium text-13 text-[#7E88C3] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
-                                             <p class="font-bold text-15 text-[#0C0E16] mt-2">$ { amount[i] }</p>
+                                             <p class="font-bold text-15 text-[#7D88C2]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
+                                             <p class="font-medium text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
+                                             <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2">$ { amount[i] }</p>
                                         </div>
                                         <div>
-                                             <p class="font-medium text-13 text-[#858BB2]">{ invoice?.billToAddress?.name }</p>
-                                             <div class="flex justify-center items-center bg-[#F3FDFA] font-bold text-15 text-[#33D69F] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
-                                                  <div class="bg-[#33D69F] w-2 h-2 rounded-full"></div>
-                                                  <span class="capitalize ml-2">{ invoice?.status }</span>
-                                             </div>
+                                             <p class="font-medium text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
+                                             {#if invoice?.status == "pending"}
+                                                  <div class="flex justify-center items-center bg-[#FFF9F0] dark:bg-[#2B2736] font-bold text-15 text-[#FF8F00] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
+                                                       <div class="bg-[#FF8F00] w-2 h-2 rounded-full"></div>
+                                                       <span class="capitalize ml-2">{ invoice?.status }</span>
+                                                  </div>
+                                             {:else if invoice?.status == "draft"}
+                                                  <div class="flex justify-center items-center bg-[#F4F4F5] dark:bg-[#2A2C44] font-bold text-15 text-[#373B53] dark:text-[#DFE3FA] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
+                                                       <div class="bg-[#373B53] dark:bg-[#DFE3FA] w-2 h-2 rounded-full"></div>
+                                                       <span class="capitalize ml-2">{ invoice?.status }</span>
+                                                  </div>
+                                             {:else}
+                                                  <div class="flex justify-center items-center bg-[#F3FDFA] dark:bg-[#1E2B3F] font-bold text-15 text-[#33D69F] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
+                                                       <div class="bg-[#33D69F] w-2 h-2 rounded-full"></div>
+                                                       <span class="capitalize ml-2">{ invoice?.status }</span>
+                                                  </div>
+                                             {/if}
                                         </div>
                                    </a>
                               </div>
                          {/if}
                     {/each}
                {:else}
-                    <div class="bg-white rounded-lg overflow-hidden">
+                    <div class="bg-white dark:bg-[#1F2139] rounded-lg overflow-hidden">
                          <a href="/{ invoice?.slug }" class="flex justify-between items-start py-7 px-6">
                               <div>
-                                   <p class="font-bold text-15 text-[#7D88C2]">#<span class="text-[#0C0E16]">{ invoice?.slug }</span></p>
-                                   <p class="font-medium text-13 text-[#7E88C3] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
-                                   <p class="font-bold text-15 text-[#0C0E16] mt-2">$ { amount[i] }</p>
+                                   <p class="font-bold text-15 text-[#7D88C2]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
+                                   <p class="font-medium text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
+                                   <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2">$ { amount[i] }</p>
                               </div>
                               <div>
-                                   <p class="font-medium text-13 text-[#858BB2]">{ invoice?.billToAddress?.name }</p>
-                                   <div class="flex justify-center items-center bg-[#F3FDFA] font-bold text-15 text-[#33D69F] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
-                                        <div class="bg-[#33D69F] w-2 h-2 rounded-full"></div>
-                                        <span class="capitalize ml-2">{ invoice?.status }</span>
-                                   </div>
+                                   <p class="font-medium text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
+                                   {#if invoice?.status == "pending"}
+                                        <div class="flex justify-center items-center bg-[#FFF9F0] dark:bg-[#2B2736] font-bold text-15 text-[#FF8F00] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
+                                             <div class="bg-[#FF8F00] w-2 h-2 rounded-full"></div>
+                                             <span class="capitalize ml-2">{ invoice?.status }</span>
+                                        </div>
+                                   {:else if invoice?.status == "draft"}
+                                        <div class="flex justify-center items-center bg-[#F4F4F5] dark:bg-[#2A2C44] font-bold text-15 text-[#373B53] dark:text-[#DFE3FA] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
+                                             <div class="bg-[#373B53] dark:bg-[#DFE3FA] w-2 h-2 rounded-full"></div>
+                                             <span class="capitalize ml-2">{ invoice?.status }</span>
+                                        </div>
+                                   {:else}
+                                        <div class="flex justify-center items-center bg-[#F3FDFA] dark:bg-[#1E2B3F] font-bold text-15 text-[#33D69F] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
+                                             <div class="bg-[#33D69F] w-2 h-2 rounded-full"></div>
+                                             <span class="capitalize ml-2">{ invoice?.status }</span>
+                                        </div>
+                                   {/if}
                               </div>
                          </a>
                     </div>
