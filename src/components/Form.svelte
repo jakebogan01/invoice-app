@@ -1,6 +1,5 @@
 <script>
      import { preferences } from "../stores/invoicesStore";
-     import { goto } from '$app/navigation';
      import { DateInput } from 'date-picker-svelte'
      
      let date = new Date();
@@ -98,14 +97,13 @@
           formFields.to.dueDateAnnouncement = `Next ${event.target.innerHTML} Days`;
           formFields.to.daysLeft = event.target.innerHTML;
 
-          let result = date;
-          result.setDate(result.getDate() + 1);
-          formFields.to.dueDate = result.toDateString().split(" ").slice(1).join(" ");
+          date.setDate(date.getDate() + Number(formFields.to.daysLeft));
+          formFields.to.dueDate = date.toDateString().split(" ").slice(1).join(" ");
 
           showPaymentTerms = false;
      }
 
-     const test = (field, type, property) => {
+     const validateForm = (field, type, property) => {
           valid = true;
 
           const checkField = (x, y, m, n) => {
@@ -173,7 +171,7 @@
                     }
                }
                if (field === "item-qty") {
-                    if (!/^\d+$/.test(item.qty) || item.qty.trim().length < 2) {
+                    if (!/^\d+$/.test(item.qty) || item.qty.trim().length < 1) {
                          valid = false;
                          errors.items.qty = "invalid qty.";
                     } else {
@@ -181,7 +179,7 @@
                     }
                }
                if (field === "item-price") {
-                    if (!/^\d+$/.test(item.price) || item.price.trim().length < 2) {
+                    if (!/^\d+$/.test(item.price) || item.price.trim().length < 1) {
                          valid = false;
                          errors.items.price = "invalid price.";
                     } else {
@@ -194,8 +192,12 @@
      const handleCreateInvoice = (id) => {
           arrayOfItems.map((item) => {
                item.total = item.qty * item.price;
-               item.total.trim().toLowerCase();
           })
+
+          if (formFields.to.dueDate == "") {
+               date.setDate(date.getDate() + 30);
+               formFields.to.dueDate = date.toDateString().split(" ").slice(1).join(" ");
+          }
 
           let newInvoice = {
                id: id,
@@ -231,12 +233,6 @@
                     
                     return [...currentInvoices, newInvoice];
                });
-
-               preferences.update(currentInvoices => {
-                    console.log(currentInvoices);
-               });
-
-               goto("/");
           }
      }
 </script>
@@ -250,7 +246,7 @@
                     <div class="col-span-full">
                          <label for="from-street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("from-address", "from", "street") } } bind:value={ formFields.from.street } name="from-street-address" id="from-street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("from-address", "from", "street") } } bind:value={ formFields.from.street } name="from-street-address" id="from-street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.from.street}</p>
                     </div>
@@ -258,7 +254,7 @@
                     <div class="sm:col-span-2 sm:col-start-1">
                          <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("from-city", "from", "city") } } bind:value={ formFields.from.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("from-city", "from", "city") } } bind:value={ formFields.from.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.from.city}</p>
                     </div>
@@ -266,7 +262,7 @@
                     <div class="sm:col-span-2">
                          <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("from-state", "from", "state") } } bind:value={ formFields.from.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("from-state", "from", "state") } } bind:value={ formFields.from.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.from.state}</p>
                     </div>
@@ -274,7 +270,7 @@
                     <div class="sm:col-span-2">
                          <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("from-zip", "from", "zip") } } bind:value={ formFields.from.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("from-zip", "from", "zip") } } bind:value={ formFields.from.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.from.zip}</p>
                     </div>
@@ -287,7 +283,7 @@
                     <div class="sm:col-span-3">
                          <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Client's name</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("to-name", "to", "name") } } bind:value={ formFields.to.name } name="name" id="name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("to-name", "to", "name") } } bind:value={ formFields.to.name } name="name" id="name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.name}</p>
                     </div>
@@ -295,7 +291,7 @@
                     <div class="sm:col-span-4">
                          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
                          <div class="mt-2">
-                              <input id="email" on:change={ () => { test("to-email", "to", "email") } } bind:value={ formFields.to.email } name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input id="email" on:change={ () => { validateForm("to-email", "to", "email") } } bind:value={ formFields.to.email } name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.email}</p>
                     </div>
@@ -303,7 +299,7 @@
                     <div class="col-span-full">
                          <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("to-street", "to", "street") } } bind:value={ formFields.to.street } name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("to-street", "to", "street") } } bind:value={ formFields.to.street } name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.street}</p>
                     </div>
@@ -311,7 +307,7 @@
                     <div class="sm:col-span-2 sm:col-start-1">
                          <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("to-city", "to", "city") } } bind:value={ formFields.to.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("to-city", "to", "city") } } bind:value={ formFields.to.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.city}</p>
                     </div>
@@ -319,7 +315,7 @@
                     <div class="sm:col-span-2">
                          <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("to-state", "to", "state") } } bind:value={ formFields.to.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("to-state", "to", "state") } } bind:value={ formFields.to.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.state}</p>
                     </div>
@@ -327,7 +323,7 @@
                     <div class="sm:col-span-2">
                          <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
                          <div class="mt-2">
-                              <input type="text" on:change={ () => { test("to-zip", "to", "zip") } } bind:value={ formFields.to.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                              <input type="text" on:change={ () => { validateForm("to-zip", "to", "zip") } } bind:value={ formFields.to.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                          </div>
                          <p class="text-red-500">{errors.to.zip}</p>
                     </div>
@@ -341,7 +337,7 @@
                </div>
 
                <div>
-                    <label id="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Assigned to</label>
+                    <label for="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Assigned to</label>
                     <div class="relative mt-2">
                          <button on:click={ () => { showPaymentTerms = true } } type="button" class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                               <span class="block truncate">{ formFields.to.dueDateAnnouncement }</span>
@@ -356,7 +352,7 @@
                                    Highlighted: "bg-indigo-600 text-white", Not Highlighted: "text-gray-900"
                                    -->
                                    {#each {length: 60} as _, i}
-                                        <li class="text-gray-900 cursor-default select-none py-2 pl-3 pr-9" id="listbox-option-0" role="option" aria-selected="true">
+                                        <li id="listbox-label[{i}]" class="text-gray-900 cursor-default select-none py-2 pl-3 pr-9" role="option" aria-selected="true">
                                              <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
                                              <span class="font-normal block truncate" on:keydown={()=>{}} on:click={ (event) => { updatePaymentTerms(event) } }>{ i + 1 }</span>
                                         </li>
@@ -369,7 +365,7 @@
                <div>
                     <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Project Description</label>
                     <div class="mt-2">
-                         <input type="text" on:change={ () => { test("to-description", "to", "description") } } bind:value={ formFields.to.description } name="description" id="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                         <input type="text" on:change={ () => { validateForm("to-description", "to", "description") } } bind:value={ formFields.to.description } name="description" id="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                     </div>
                     <p class="text-red-500">{errors.to.description}</p>
                </div>
@@ -384,9 +380,9 @@
                     <div class="mt-2 space-y-4">
                          {#each numberOfColumns as item, i}
                               <div class="flex items-center space-x-4">
-                                   <input type="text" on:change={ () => { test("item-name") } } bind:value={ arrayOfItems[i].name } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
-                                   <input type="text" on:change={ () => { test("item-qty") } } bind:value={ arrayOfItems[i].qty } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
-                                   <input type="text" on:change={ () => { test("item-price") } } bind:value={ arrayOfItems[i].price } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" on:change={ () => { validateForm("item-name") } } bind:value={ arrayOfItems[i].name } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" on:change={ () => { validateForm("item-qty") } } bind:value={ arrayOfItems[i].qty } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
+                                   <input type="text" on:change={ () => { validateForm("item-price") } } bind:value={ arrayOfItems[i].price } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo" required>
                                    {#if i >= 1}
                                         <button type="button" on:click={ () => { addColumnOptions(item, i) } } class="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                              <span class="sr-only">Close</span>
@@ -400,7 +396,7 @@
                          <p class="text-red-500">{errors.items.price}</p>
                     </div>
                </div>
-               <button type="button" on:click={ () => { numberOfColumns = [...numberOfColumns, numberOfColumns.length + 1]; arrayOfItems.push({name: "", qty: null, price: null, test: name}) } } class="inline-flex w-full justify-center items-center rounded-md bg-[#635FC7] bg-opacity-20 px-3 h-10 text-sm font-semibold text-[#635FC7] hover:text-white shadow-sm hover:bg-opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2">
+               <button type="button" on:click={ () => { numberOfColumns = [...numberOfColumns, numberOfColumns.length + 1]; arrayOfItems.push({name: "", qty: null, price: null, total: null}) } } class="inline-flex w-full justify-center items-center rounded-md bg-[#635FC7] bg-opacity-20 px-3 h-10 text-sm font-semibold text-[#635FC7] hover:text-white shadow-sm hover:bg-opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2">
                     <span class="flex items-center space-x-1">
                          <span>
                               <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.11001 8V5.09H0.200012V3.395H3.11001V0.5H4.80501V3.395H7.70001V5.09H4.80501V8H3.11001Z" fill="currentColor"/></svg>
