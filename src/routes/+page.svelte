@@ -124,6 +124,13 @@
      {/if}
 
      <div class="space-y-4">
+          {#if $preferences.length == 0}
+               <div class="flex flex-col justify-center items-center mt-[6.25rem] text-center">
+                    <img src="/illustration-empty.svg" alt="empty" class="h-[10rem] md:h-auto">
+                    <h1 class="font-bold text-2xl text-[#0C0E16] dark:text-white mt-10 mb-4">There is nothing here</h1>
+                    <p class="text-[#888DB0] dark:text-white leading-tight">Create an invoice by clicking the<br><b>New</b> button and get started</p>
+               </div>
+          {/if}
           {#each $preferences as invoice, i}
                {#if startFiltering}
                     {#each filterArray as status}
@@ -132,11 +139,11 @@
                                    <a href="/{ invoice?.slug }" class="flex justify-between items-start py-7 px-6">
                                         <div>
                                              <p class="font-bold text-15 text-[#7D88C2]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
-                                             <p class="font-medium text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
+                                             <p class="text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
                                              <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2">$ { amount[i] }</p>
                                         </div>
                                         <div>
-                                             <p class="font-medium text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
+                                             <p class="text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
                                              {#if invoice?.status == "pending"}
                                                   <div class="flex justify-center items-center bg-[#FFF9F0] dark:bg-[#2B2736] font-bold text-15 text-[#FF8F00] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
                                                        <div class="bg-[#FF8F00] w-2 h-2 rounded-full"></div>
@@ -163,11 +170,11 @@
                          <a href="/{ invoice?.slug }" class="flex justify-between items-start py-7 px-6">
                               <div>
                                    <p class="font-bold text-15 text-[#7D88C2]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
-                                   <p class="font-medium text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
+                                   <p class="text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5">Due { invoice?.billToAddress?.dueDate }</p>
                                    <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2">$ { amount[i] }</p>
                               </div>
                               <div>
-                                   <p class="font-medium text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
+                                   <p class="text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
                                    {#if invoice?.status == "pending"}
                                         <div class="flex justify-center items-center bg-[#FFF9F0] dark:bg-[#2B2736] font-bold text-15 text-[#FF8F00] w-[6.5rem] h-10 mt-[1.625rem] rounded-md">
                                              <div class="bg-[#FF8F00] w-2 h-2 rounded-full"></div>
