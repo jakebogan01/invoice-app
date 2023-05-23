@@ -15,13 +15,13 @@
 
 <nav class="flex justify-between items-center bg-[#373B53]">
      <div>
-          <div class="relative bg-[#7C5DFA] w-[4.5rem] h-[4.5rem] rounded-tr-[1.25rem] rounded-br-[1.25rem] overflow-hidden">
-               <div class="absolute top-[2.25rem] bg-[#9277FF] w-[4.5rem] h-[4.5rem] rounded-tl-[1.25rem]"></div>
-               <img src="/main-logo.svg" alt="logo" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[1.625rem]">
+          <div class="relative bg-[#7C5DFA] w-[4.5rem] h-[4.5rem] md:h-20 rounded-tr-[1.25rem] rounded-br-[1.25rem] overflow-hidden">
+               <div class="absolute top-[2.25rem] md:top-[2.5rem] bg-[#9277FF] w-[4.5rem] h-[4.5rem] rounded-tl-[1.25rem]"></div>
+               <img src="/main-logo.svg" alt="logo" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[1.625rem] md:h-[1.8125rem]">
           </div>
      </div>
 
-     <div class="flex items-center h-[4.5rem] divide-x divide-[#494E6E]">
+     <div class="flex items-center h-[4.5rem] md:h-20 divide-x divide-[#494E6E]">
           <div class="flex items-center px-6 h-full">
                <button on:click={ test } type="button">
                     {#if changeTheme}

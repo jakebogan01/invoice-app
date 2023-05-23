@@ -51,7 +51,7 @@ export const preferences = persisted("preferences", [
                          name: "Banner Design",
                          qty: 2,
                          price: 150.0,
-                         total: 300.0,
+                         total: 30000.0,
                     },
                     {
                          name: "Email Design",
