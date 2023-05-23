@@ -7,6 +7,16 @@ export default {
                fontFamily: {
                     spartan: ["League Spartan", "sans-serif"],
                },
+               fontSize: {
+                    13: "0.8125rem",
+                    15: "0.9375rem",
+               },
+               lineHeight: {
+                    15: "0.9375rem",
+                    18: "1.125rem",
+                    22: "1.375rem",
+                    33: "2.0625rem",
+               },
           },
      },
      plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("@tailwindcss/aspect-ratio"), require("@tailwindcss/line-clamp")],
