@@ -73,11 +73,15 @@
      }
 </script>
 
-<main on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="px-6 max-w-[45.625rem] mx-auto">
+<main on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="px-6 w-full max-w-[45.625rem] mx-auto">
      <section on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="flex justify-between items-center my-8 md:my-[3.8125rem]">
           <div>
                <h1 class="font-bold text-[#0C0E16] dark:text-white text-2xl md:text-4xl leading-[1.5625rem]">Invoices</h1>
-               <span class="text-13 text-[#888DB1] dark:text-[#DFE3FA]"><span class="hidden md:inline">There are </span>{ $preferences.length } <span class="hidden md:inline"> total </span>Invoices</span>
+               {#if $preferences.length == 0}
+                    <span class="text-13 text-[#888DB1] dark:text-[#DFE3FA]">There are no Invoices</span>
+               {:else}
+                    <span class="text-13 text-[#888DB1] dark:text-[#DFE3FA]"><span class="hidden md:inline">There are </span>{ $preferences.length } <span class="hidden md:inline"> total </span>Invoices</span>
+               {/if}
           </div>
 
           <div class="flex items-center">
@@ -125,10 +129,10 @@
 
      <div class="space-y-4">
           {#if $preferences.length == 0}
-               <div class="flex flex-col justify-center items-center mt-[6.25rem] text-center">
+               <div class="flex flex-col justify-center items-center mt-[6.25rem] md:mt-[13.5rem] text-center">
                     <img src="/illustration-empty.svg" alt="empty" class="h-[10rem] md:h-auto">
-                    <h1 class="font-bold text-2xl text-[#0C0E16] dark:text-white mt-10 mb-4">There is nothing here</h1>
-                    <p class="text-[#888DB0] dark:text-white leading-tight">Create an invoice by clicking the<br><b>New</b> button and get started</p>
+                    <h1 class="font-bold text-2xl md:text-2xl text-[#0C0E16] dark:text-white mt-10 mb-4">There is nothing here</h1>
+                    <p class="text-13 text-[#888DB0] dark:text-white leading-tight">Create an invoice by clicking the<br><b>New</b> button and get started</p>
                </div>
           {/if}
           {#each $preferences as invoice, i}

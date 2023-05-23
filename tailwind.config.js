@@ -17,6 +17,9 @@ export default {
                     22: "1.375rem",
                     33: "2.0625rem",
                },
+               screens: {
+                    1440: "1440px",
+               },
           },
      },
      plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography"), require("@tailwindcss/aspect-ratio"), require("@tailwindcss/line-clamp")],

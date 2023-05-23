@@ -10,7 +10,7 @@
 </script>
 
 <div class="font-spartan font-medium {themeMode}">
-     <div class="dark:bg-[#141625] min-h-screen">
+     <div class="flex flex-col 1440:flex-row dark:bg-[#141625] min-h-screen 1440:min-h-full">
           <Nav />
           <slot />
      </div>
