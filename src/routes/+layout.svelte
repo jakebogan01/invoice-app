@@ -1,6 +1,7 @@
 <script>
      import { theme } from "../stores/darkThemeStore";
      import "../app.css";
+     import Nav from "../components/Nav.svelte";
 
      let themeMode;
      $: {
@@ -9,5 +10,6 @@
 </script>
 
 <div class="font-spartan font-medium {themeMode}">
+     <Nav />
      <slot />
 </div>
