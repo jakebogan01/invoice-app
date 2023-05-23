@@ -8,6 +8,7 @@
      let date = new Date();
      let showPaymentTerms = false;
      let valid = false;
+     let saveDraft = false;
 
      let formItemField = {newTaskSubtask: []};
      let numberOfColumns = [1];
@@ -204,7 +205,7 @@
                          errors.items.name = "can't be empty";
                     } else {
                          errors.items.name = "";
-                         if (editInvoice) {
+                         if (editInvoice && e.target.value.trim() !== "") {
                               item.name = e.target.value.trim();
                          }
                     }
@@ -215,7 +216,7 @@
                          errors.items.qty = "invalid qty.";
                     } else {
                          errors.items.qty = "";
-                         if (editInvoice) {
+                         if (editInvoice && e.target.value.trim() !== null) {
                               item.qty = e.target.value.trim();
                          }
                     }
@@ -226,7 +227,7 @@
                          errors.items.price = "invalid price.";
                     } else {
                          errors.items.price = "";
-                         if (editInvoice) {
+                         if (editInvoice && e.target.value.trim() !== null) {
                               item.price = e.target.value.trim();
                          }
                     }
@@ -244,9 +245,15 @@
                formFields.to.dueDate = date.toDateString().split(" ").slice(1).join(" ");
           }
 
+          let status = "pending";
+
+          if (saveDraft) {
+               status = "draft";
+          }
+
           let newInvoice = {
                id: id,
-               status: "pending",
+               status: status,
                slug: radonSlug.getSlug(),
                billFromAddress: {
                     street: formFields.from.street.trim().toLowerCase(),
@@ -283,56 +290,16 @@
           }
      }
 
-     const test = () => {
+     const handleEditInvoice = () => {
           arrayOfItems.map((item) => {
                item.total = item.qty * item.price;
           })
 
-          // if (formFields.to.dueDate == "") {
-          //      date.setDate(date.getDate() + 30);
-          //      formFields.to.dueDate = date.toDateString().split(" ").slice(1).join(" ");
-          // }
-
           if (valid) {
-               // BoardStore.update(currentBoards => {
-                    // let copiedBoards = [...currentBoards];
-                    // let updatedBoard = copiedBoards.find(board => board.id === specificId);
-
-               //      let tasks = updatedBoard.tasks;
-               //      let filteredTask = tasks.filter(task => task.id === id);
-
-               //      filteredTask[0].status = boardFields.taskCurrentStatus;
-
-               //      return copiedBoards;
-               // });
-
                preferences.update(currentInvoices => {
                     let copiedInvoices = [...currentInvoices];
                     let updatedInvoice = copiedInvoices.find(invoice => invoice.slug === data?.slug);
 
-                    // let newInvoice = {
-                    //      id: id,
-                    //      status: "paid",
-                    //      slug: radonSlug.getSlug(),
-                    //      billFromAddress: {
-                    //           street: formFields.from.street.trim().toLowerCase(),
-                    //           city: formFields.from.city.trim().toLowerCase(),
-                    //           state: formFields.from.state.trim().toLowerCase(),
-                    //           zip: formFields.from.zip,
-                    //      },
-                    //      billToAddress: {
-                    //           name: formFields.to.name.trim().toLowerCase(),
-                    //           email: formFields.to.email.trim().toLowerCase(),
-                    //           street: formFields.to.street.trim().toLowerCase(),
-                    //           city: formFields.to.city.trim().toLowerCase(),
-                    //           state: formFields.to.state.trim().toLowerCase(),
-                    //           zip: formFields.to.zip,
-                    //           invoiceDate: formFields.to.invoiceDate,
-                    //           dueDate: formFields.to.dueDate,
-                    //           description: formFields.to.description.trim().toLowerCase(),
-                    //           items: [...arrayOfItems],
-                    //      },
-                    // };
                     updatedInvoice.billFromAddress.street = formFields.from.street !== "" ? formFields.from.street : updatedInvoice.billFromAddress.street;
                     updatedInvoice.billFromAddress.city = formFields.from.city !== "" ? formFields.from.city : updatedInvoice.billFromAddress.city;
                     updatedInvoice.billFromAddress.state = formFields.from.state !== "" ? formFields.from.state : updatedInvoice.billFromAddress.state;
@@ -345,27 +312,8 @@
                     updatedInvoice.billToAddress.state = formFields.to.state !== "" ? formFields.to.state : updatedInvoice.billToAddress.state;
                     updatedInvoice.billToAddress.zip = formFields.to.zip !== "" ? formFields.to.zip : updatedInvoice.billToAddress.zip;
                     
-                    updatedInvoice.billToAddress.invoiceDate = updatedInvoice.billToAddress.invoiceDate;
-                    updatedInvoice.billToAddress.dueDate = updatedInvoice.billToAddress.dueDate;
-                    
                     updatedInvoice.billToAddress.description = formFields.to.description !== "" ? formFields.to.description : updatedInvoice.billToAddress.description;
                     
-                    // let arrayOfItems = [
-                    //      { 
-                    //           name: "",
-                    //           qty: null,
-                    //           price: null,
-                    //           total: null
-                    //      }
-                    // ];
-
-                    updatedInvoice.billToAddress.items.forEach((item) => {
-                         item.name = arrayOfItems[0].name !== "" ? arrayOfItems[0].name : item.name;
-                         item.qty = arrayOfItems[0].qty !== null ? arrayOfItems[0].qty : item.qty;
-                         item.price = arrayOfItems[0].price !== null ? arrayOfItems[0].price : item.price;
-                         item.total = arrayOfItems[0].total !== null ? arrayOfItems[0].total : item.total;
-                    });
-
                     return copiedInvoices;
                });
 
@@ -377,7 +325,7 @@
 {#if editInvoice}
      {#each $preferences as invoice}
           {#if invoice?.slug == data?.slug}
-               <form on:submit|preventDefault={ test } class="border-2 border-red-500">
+               <form on:submit|preventDefault={ handleEditInvoice } class="border-2 border-red-500">
                     <h1 class="text-xl font-semibold leading-7 text-gray-900 pb-10">Edit Invoice</h1>
                     <div class="space-y-12">
                          <div class="border-b border-gray-900/10 pb-12">
@@ -713,6 +661,7 @@
      
           <div class="mt-6 flex items-center justify-end gap-x-6">
                <button on:click={ () => { showForm = false } } type="button" class="text-sm font-semibold leading-6 text-gray-900">Discard</button>
+               <button on:click={ () => { saveDraft = true } } type="submit" class="text-sm font-semibold leading-6 text-gray-900">Save Draft</button>
                <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save & Send</button>
           </div>
      </form>

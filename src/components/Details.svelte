@@ -33,25 +33,25 @@
                          <p>Bill From:</p>
                     </div>
 
-                    <p>Address: { invoice?.billFromAddress?.street }</p>
-                    <p>City: { invoice?.billFromAddress?.city }</p>
-                    <p>State: { invoice?.billFromAddress?.state }</p>
-                    <p>Zip: { invoice?.billFromAddress?.zip }</p>
+                    <p>Address: { invoice?.billFromAddress?.street ? invoice?.billFromAddress?.street : "Missing" }</p>
+                    <p>City: { invoice?.billFromAddress?.city ? invoice?.billFromAddress?.city : "Missing" }</p>
+                    <p>State: { invoice?.billFromAddress?.state ? invoice?.billFromAddress?.state : "Missing" }</p>
+                    <p>Zip: { invoice?.billFromAddress?.zip ? invoice?.billFromAddress?.zip : "Missing" }</p>
 
                     <div class="py-4">
                          <hr>
                          <p>Bill To:</p>
                     </div>
 
-                    <p>Name: { invoice?.billToAddress?.name }</p>
-                    <p>Email: { invoice?.billToAddress?.email }</p>
-                    <p>Address: { invoice?.billToAddress?.street }</p>
-                    <p>City: { invoice?.billToAddress?.city }</p>
-                    <p>State: { invoice?.billToAddress?.state }</p>
-                    <p>Zip: { invoice?.billToAddress?.zip }</p>
-                    <p>Invoice Date: { invoice?.billToAddress?.invoiceDate }</p>
-                    <p>Due Date: { invoice?.billToAddress?.dueDate }</p>
-                    <p>Description: { invoice?.billToAddress?.description }</p>
+                    <p>Name: { invoice?.billToAddress?.name ? invoice?.billToAddress?.name : "Missing" }</p>
+                    <p>Email: { invoice?.billToAddress?.email ? invoice?.billToAddress?.email : "Missing" }</p>
+                    <p>Address: { invoice?.billToAddress?.street ? invoice?.billToAddress?.street : "Missing" }</p>
+                    <p>City: { invoice?.billToAddress?.city ? invoice?.billToAddress?.city : "Missing" }</p>
+                    <p>State: { invoice?.billToAddress?.state ? invoice?.billToAddress?.state : "Missing" }</p>
+                    <p>Zip: { invoice?.billToAddress?.zip ? invoice?.billToAddress?.zip : "Missing" }</p>
+                    <p>Invoice Date: { invoice?.billToAddress?.invoiceDate ? invoice?.billToAddress?.invoiceDate : "Missing" }</p>
+                    <p>Due Date: { invoice?.billToAddress?.dueDate ? invoice?.billToAddress?.dueDate : "Missing" }</p>
+                    <p>Description: { invoice?.billToAddress?.description ? invoice?.billToAddress?.description : "Missing" }</p>
 
                     <div class="py-4">
                          <hr>
@@ -61,17 +61,17 @@
                     <div class="flex space-x-4">
                          {#each invoice?.billToAddress?.items as item}
                               <div>
-                                   <p>Name: { item?.name }</p>
-                                   <p>Qty.: { item?.qty }</p>
-                                   <p>Price: { item?.price }</p>
-                                   <p>Total: { item?.total }</p>
+                                   <p>Name: { item?.name ? item?.name : "Missing" }</p>
+                                   <p>Qty.: { item?.qty ? item?.qty : "0" }</p>
+                                   <p>Price: { item?.price ? item?.price : "0" }</p>
+                                   <p>Total: { item?.total ? item?.total : "0" }</p>
                               </div>
                          {/each}
                     </div>
 
                     <div class="py-4">
                          <hr>
-                         <p>Amount: { amount }</p>
+                         <p>Amount: { amount ? amount : "0" }</p>
                     </div>
                </div>
           {/if}
