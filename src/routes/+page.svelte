@@ -73,8 +73,8 @@
      }
 </script>
 
-<main class="px-6 max-w-[45.625rem] mx-auto">
-     <section class="flex justify-between items-center my-8 md:my-[3.8125rem]">
+<main on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="px-6 max-w-[45.625rem] mx-auto">
+     <section on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="flex justify-between items-center my-8 md:my-[3.8125rem]">
           <div>
                <h1 class="font-bold text-[#0C0E16] dark:text-white text-2xl md:text-4xl leading-[1.5625rem]">Invoices</h1>
                <span class="text-13 text-[#888DB1] dark:text-[#DFE3FA]"><span class="hidden md:inline">There are </span>{ $preferences.length } <span class="hidden md:inline"> total </span>Invoices</span>
@@ -92,7 +92,7 @@
                               </button>
                          </h3>
                          {#if openFilter}
-                              <div class="absolute top-12 right-0 bg-white dark:bg-[#252945] shadow-lg w-[12rem] p-6 text-15 font-bold text-[#1F2139] dark:text-white rounded-xl space-y-4" id="filter-section-0">
+                              <div class="absolute top-12 right-0 bg-white dark:bg-[#252945] shadow-lg w-[12rem] p-6 text-15 font-bold text-[#1F2139] dark:text-white rounded-xl space-y-4 z-10" id="filter-section-0">
                                    <div class="flex items-center">
                                         <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                         <label for="filter-mobile-category-0" class="ml-3">Paid</label>
