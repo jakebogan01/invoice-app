@@ -37,7 +37,7 @@
 </div>
 
 {#if editInvoice}
-     <Form showForm="true" editInvoice={editInvoice} data={data} />
+     <Form bind:showForm={editInvoice} editInvoice={editInvoice} data={data} />
 {/if}
 
 {#if delteModal}

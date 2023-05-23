@@ -131,36 +131,69 @@
           switch (field) {
                case "from-address":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.from.street = e.target.value;
+                    }
                break;
                case "from-city":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.from.city = e.target.value;
+                    }
                break;
                case "from-state":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.from.state = e.target.value;
+                    }
                break;
                case "from-zip":
                     checkField(type, property, "invalid zip / postal code", true, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.from.zip = e.target.value;
+                    }
                break;
                case "to-name":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.name = e.target.value;
+                    }
                break;
                case "to-email":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.email = e.target.value;
+                    }
                break;
                case "to-street":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.street = e.target.value;
+                    }
                break;
                case "to-city":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.city = e.target.value;
+                    }
                break;
                case "to-state":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.state = e.target.value;
+                    }
                break;
                case "to-zip":
                     checkField(type, property, "invalid zip / postal code", true, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.zip = e.target.value;
+                    }
                break;
                case "to-description":
                     checkField(type, property, "can't be empty", false, e);
+                    if (editInvoice && e.target.value !== "") {
+                         formFields.to.description = e.target.value;
+                    }
                break;
           }
 
@@ -171,6 +204,9 @@
                          errors.items.name = "can't be empty";
                     } else {
                          errors.items.name = "";
+                         if (editInvoice) {
+                              item.name = e.target.value.trim();
+                         }
                     }
                }
                if (field === "item-qty") {
@@ -179,6 +215,9 @@
                          errors.items.qty = "invalid qty.";
                     } else {
                          errors.items.qty = "";
+                         if (editInvoice) {
+                              item.qty = e.target.value.trim();
+                         }
                     }
                }
                if (field === "item-price") {
@@ -187,6 +226,9 @@
                          errors.items.price = "invalid price.";
                     } else {
                          errors.items.price = "";
+                         if (editInvoice) {
+                              item.price = e.target.value.trim();
+                         }
                     }
                }
           })
@@ -204,7 +246,7 @@
 
           let newInvoice = {
                id: id,
-               status: "paid",
+               status: "pending",
                slug: radonSlug.getSlug(),
                billFromAddress: {
                     street: formFields.from.street.trim().toLowerCase(),
@@ -242,10 +284,93 @@
      }
 
      const test = () => {
-          
-     }
-     const test2 = (event) => {
-          console.log(event.target.value);
+          arrayOfItems.map((item) => {
+               item.total = item.qty * item.price;
+          })
+
+          // if (formFields.to.dueDate == "") {
+          //      date.setDate(date.getDate() + 30);
+          //      formFields.to.dueDate = date.toDateString().split(" ").slice(1).join(" ");
+          // }
+
+          if (valid) {
+               // BoardStore.update(currentBoards => {
+                    // let copiedBoards = [...currentBoards];
+                    // let updatedBoard = copiedBoards.find(board => board.id === specificId);
+
+               //      let tasks = updatedBoard.tasks;
+               //      let filteredTask = tasks.filter(task => task.id === id);
+
+               //      filteredTask[0].status = boardFields.taskCurrentStatus;
+
+               //      return copiedBoards;
+               // });
+
+               preferences.update(currentInvoices => {
+                    let copiedInvoices = [...currentInvoices];
+                    let updatedInvoice = copiedInvoices.find(invoice => invoice.slug === data?.slug);
+
+                    // let newInvoice = {
+                    //      id: id,
+                    //      status: "paid",
+                    //      slug: radonSlug.getSlug(),
+                    //      billFromAddress: {
+                    //           street: formFields.from.street.trim().toLowerCase(),
+                    //           city: formFields.from.city.trim().toLowerCase(),
+                    //           state: formFields.from.state.trim().toLowerCase(),
+                    //           zip: formFields.from.zip,
+                    //      },
+                    //      billToAddress: {
+                    //           name: formFields.to.name.trim().toLowerCase(),
+                    //           email: formFields.to.email.trim().toLowerCase(),
+                    //           street: formFields.to.street.trim().toLowerCase(),
+                    //           city: formFields.to.city.trim().toLowerCase(),
+                    //           state: formFields.to.state.trim().toLowerCase(),
+                    //           zip: formFields.to.zip,
+                    //           invoiceDate: formFields.to.invoiceDate,
+                    //           dueDate: formFields.to.dueDate,
+                    //           description: formFields.to.description.trim().toLowerCase(),
+                    //           items: [...arrayOfItems],
+                    //      },
+                    // };
+                    updatedInvoice.billFromAddress.street = formFields.from.street !== "" ? formFields.from.street : updatedInvoice.billFromAddress.street;
+                    updatedInvoice.billFromAddress.city = formFields.from.city !== "" ? formFields.from.city : updatedInvoice.billFromAddress.city;
+                    updatedInvoice.billFromAddress.state = formFields.from.state !== "" ? formFields.from.state : updatedInvoice.billFromAddress.state;
+                    updatedInvoice.billFromAddress.zip = formFields.from.zip !== "" ? formFields.from.zip : updatedInvoice.billFromAddress.zip;
+                    
+                    updatedInvoice.billToAddress.name = formFields.to.name !== "" ? formFields.to.name : updatedInvoice.billToAddress.name;
+                    updatedInvoice.billToAddress.email = formFields.to.email !== "" ? formFields.to.email : updatedInvoice.billToAddress.email;
+                    updatedInvoice.billToAddress.street = formFields.to.street !== "" ? formFields.to.street : updatedInvoice.billToAddress.street;
+                    updatedInvoice.billToAddress.city = formFields.to.city !== "" ? formFields.to.city : updatedInvoice.billToAddress.city;
+                    updatedInvoice.billToAddress.state = formFields.to.state !== "" ? formFields.to.state : updatedInvoice.billToAddress.state;
+                    updatedInvoice.billToAddress.zip = formFields.to.zip !== "" ? formFields.to.zip : updatedInvoice.billToAddress.zip;
+                    
+                    updatedInvoice.billToAddress.invoiceDate = updatedInvoice.billToAddress.invoiceDate;
+                    updatedInvoice.billToAddress.dueDate = updatedInvoice.billToAddress.dueDate;
+                    
+                    updatedInvoice.billToAddress.description = formFields.to.description !== "" ? formFields.to.description : updatedInvoice.billToAddress.description;
+                    
+                    // let arrayOfItems = [
+                    //      { 
+                    //           name: "",
+                    //           qty: null,
+                    //           price: null,
+                    //           total: null
+                    //      }
+                    // ];
+
+                    updatedInvoice.billToAddress.items.forEach((item) => {
+                         item.name = arrayOfItems[0].name !== "" ? arrayOfItems[0].name : item.name;
+                         item.qty = arrayOfItems[0].qty !== null ? arrayOfItems[0].qty : item.qty;
+                         item.price = arrayOfItems[0].price !== null ? arrayOfItems[0].price : item.price;
+                         item.total = arrayOfItems[0].total !== null ? arrayOfItems[0].total : item.total;
+                    });
+
+                    return copiedInvoices;
+               });
+
+               showForm = false;
+          }
      }
  </script>
 

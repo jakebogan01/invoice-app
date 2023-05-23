@@ -48,14 +48,12 @@ export const preferences = persisted("preferences", [
                description: "Graphic Design",
                items: [
                     {
-                         id: 1,
                          name: "Banner Design",
                          qty: 2,
                          price: 150.0,
                          total: 300.0,
                     },
                     {
-                         id: 2,
                          name: "Email Design",
                          qty: 1,
                          price: 400.0,
@@ -86,14 +84,12 @@ export const preferences = persisted("preferences", [
                description: "Graphic Design",
                items: [
                     {
-                         id: 1,
                          name: "Banner Design",
                          qty: 2,
                          price: 550.0,
                          total: 1100.0,
                     },
                     {
-                         id: 2,
                          name: "Email Design",
                          qty: 1,
                          price: 300.0,
@@ -124,14 +120,12 @@ export const preferences = persisted("preferences", [
                description: "Graphic Design",
                items: [
                     {
-                         id: 1,
                          name: "Banner Design",
                          qty: 2,
                          price: 90.0,
                          total: 180.0,
                     },
                     {
-                         id: 2,
                          name: "Email Design",
                          qty: 1,
                          price: 10.0,

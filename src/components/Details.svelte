@@ -61,8 +61,7 @@
                     <div class="flex space-x-4">
                          {#each invoice?.billToAddress?.items as item}
                               <div>
-                                   <p>ID: { item?.id }</p>
-                                   <p>ID: { item?.name }</p>
+                                   <p>Name: { item?.name }</p>
                                    <p>Qty.: { item?.qty }</p>
                                    <p>Price: { item?.price }</p>
                                    <p>Total: { item?.total }</p>
