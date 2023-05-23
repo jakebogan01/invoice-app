@@ -4,9 +4,11 @@
      import Button from "../../components/Button.svelte";
      import DeleteModal from "../../components/DeleteModal.svelte";
      import Details from "../../components/Details.svelte";
+     import Form from "../../components/Form.svelte";
      export let data;
 
      let delteModal = false;
+     let editInvoice = false;
 
      const handleDeleteInvoice = () => {
           preferences.update(currentInvoices => {
@@ -29,10 +31,14 @@
 </script>
 
 <div class="flex items-center justify-between px-4">
-     <Button style="bg-green-500">Edit</Button>
+     <Button on:click={ () => { editInvoice = true } } style="bg-green-500">Edit</Button>
      <Button on:click={ () => { delteModal = true } }>Delete</Button>
      <Button on:click={ handleUpdateStatusToPaid } style="bg-purple-500">Mark as Paid</Button>
 </div>
+
+{#if editInvoice}
+     <Form showForm="true" editInvoice={editInvoice} data={data} />
+{/if}
 
 {#if delteModal}
      <DeleteModal bind:delteModal={ delteModal } on:click={ handleDeleteInvoice } />
