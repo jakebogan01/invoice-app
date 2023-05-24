@@ -117,15 +117,15 @@
                                         </div>
                                    {:else}
                                         <div class="flex items-center">
-                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                             <input checked={filterArray.includes("paid")} on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                              <label for="filter-mobile-category-0" class="ml-3">Paid</label>
                                         </div>
                                         <div class="flex items-center">
-                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                             <input checked={filterArray.includes("pending")} on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                              <label for="filter-mobile-category-1" class="ml-3">Pending</label>
                                         </div>
                                         <div class="flex items-center">
-                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                             <input checked={filterArray.includes("draft")} on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
                                              <label for="filter-mobile-category-3" class="ml-3">Draft</label>
                                         </div>
                                    {/if}
