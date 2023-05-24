@@ -30,6 +30,10 @@
      }
 </script>
 
+{#if editInvoice}
+     <Form bind:showForm={editInvoice} editInvoice={editInvoice} data={data} />
+{/if}
+
 <main class="px-6 w-full max-w-[45.625rem] md:max-w-[52rem] mx-auto" style="height: 100vh; overflow-y: auto;">
      <a href="/" class="flex items-center font-bold text-15 text-[#0C0E16] dark:text-white my-8 md:mt-20">
           <span class="mr-1.5 flex items-center text-[#7C5DFA]">
@@ -37,10 +41,6 @@
           </span>
           <span class="pt-0.5">Go back</span>
      </a>
-
-     {#if editInvoice}
-          <Form bind:showForm={editInvoice} editInvoice={editInvoice} data={data} />
-     {/if}
      
      {#if delteModal}
           <DeleteModal bind:delteModal={ delteModal } on:click={ handleDeleteInvoice } />

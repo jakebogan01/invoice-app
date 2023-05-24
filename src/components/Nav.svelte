@@ -13,7 +13,7 @@
      }
 </script>
 
-<nav class="flex flex-row 1440:flex-col justify-between items-center bg-[#373B53] 1440:rounded-tr-[1.25rem] 1440:rounded-br-[1.25rem] 1440:h-screen overflow-hidden">
+<nav class="flex flex-row 1440:flex-col justify-between items-center bg-[#373B53] 1440:rounded-tr-[1.25rem] 1440:rounded-br-[1.25rem] 1440:h-screen overflow-hidden z-50">
      <div>
           <div class="relative bg-[#7C5DFA] w-[4.5rem] h-[4.5rem] md:h-20 1440:w-[6.4375rem] 1440:h-[6.4375rem] rounded-tr-[1.25rem] rounded-br-[1.25rem] overflow-hidden">
                <div class="absolute top-[2.25rem] md:top-[2.5rem] 1440:top-[3.21875rem] bg-[#9277FF] w-[4.5rem] h-[4.5rem] 1440:w-[6.4375rem] 1440:h-[6.4375rem] rounded-tl-[1.25rem]"></div>

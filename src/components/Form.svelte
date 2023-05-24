@@ -322,155 +322,160 @@
      }
  </script>
 
+<div class="fixed inset-0 bg-black bg-opacity-25 transition-opacity z-30"></div>
 {#if editInvoice}
      {#each $preferences as invoice}
           {#if invoice?.slug == data?.slug}
-               <form on:submit|preventDefault={ handleEditInvoice } class="border-2 border-red-500">
-                    <h1 class="text-xl font-semibold leading-7 text-gray-900 pb-10">Edit Invoice</h1>
-                    <div class="space-y-12">
-                         <div class="border-b border-gray-900/10 pb-12">
-                              <h2 class="text-base font-semibold leading-7 text-gray-900">Bill From</h2>
+               <form on:submit|preventDefault={ handleEditInvoice } class="fixed w-full max-w-[55.3125rem] left-[5.625rem] bg-[#F9FAFE] border-2 border-red-500 h-screen overflow-y-auto z-40">
+                    <h1 class="font-bold text-2xl text-[#0C0E16] pb-10 px-14 pt-14">Edit <span class="text-[#888EB0]">#</span>{ invoice?.slug }</h1>
+                    <div class="space-y-12 px-14 pb-14">
+                         <div class="pb-4">
+                              <h2 class="font-bold text-15 text-[#7C5DFA]">Bill From</h2>
                               <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                                    <div class="col-span-full">
-                                        <label for="from-street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
+                                        <label for="from-street-address" class="block text-13 text-[#7E87C4]">Street address</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("from-address", "from", "street", event) } } value={ invoice?.billFromAddress?.street } name="from-street-address" id="from-street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("from-address", "from", "street", event) } } value={ invoice?.billFromAddress?.street } name="from-street-address" id="from-street-address" autocomplete="street-address" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.from.street}</p>
                                    </div>
 
                                    <div class="sm:col-span-2 sm:col-start-1">
-                                        <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
+                                        <label for="city" class="block text-13 text-[#7E87C4]">City</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("from-city", "from", "city", event) } } value={ invoice?.billFromAddress?.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("from-city", "from", "city", event) } } value={ invoice?.billFromAddress?.city } name="city" id="city" autocomplete="address-level2" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.from.city}</p>
                                    </div>
 
                                    <div class="sm:col-span-2">
-                                        <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
+                                        <label for="region" class="block text-13 text-[#7E87C4]">State / Province</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("from-state", "from", "state", event) } } value={ invoice?.billFromAddress?.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("from-state", "from", "state", event) } } value={ invoice?.billFromAddress?.state } name="region" id="region" autocomplete="address-level1" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.from.state}</p>
                                    </div>
 
                                    <div class="sm:col-span-2">
-                                        <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
+                                        <label for="postal-code" class="block text-13 text-[#7E87C4]">ZIP / Postal code</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("from-zip", "from", "zip", event) } } value={ invoice?.billFromAddress?.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("from-zip", "from", "zip", event) } } value={ invoice?.billFromAddress?.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.from.zip}</p>
                                    </div>
                               </div>
                          </div>
 
-                         <div class="border-b border-gray-900/10 pb-12">
-                              <h2 class="text-base font-semibold leading-7 text-gray-900">Bill To</h2>
+                         <div class="pb-4">
+                              <h2 class="font-bold text-15 text-[#7C5DFA]">Bill To</h2>
                               <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                   <div class="sm:col-span-3">
-                                        <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Client's name</label>
+                                   <div class="col-span-full">
+                                        <label for="name" class="block text-13 text-[#7E87C4]">Client's name</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("to-name", "to", "name", event) } } value={ invoice?.billToAddress?.name } name="name" id="name" autocomplete="given-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("to-name", "to", "name", event) } } value={ invoice?.billToAddress?.name } name="name" id="name" autocomplete="given-name" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.to.name}</p>
                                    </div>
 
-                                   <div class="sm:col-span-4">
-                                        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+                                   <div class="col-span-full">
+                                        <label for="email" class="block text-13 text-[#7E87C4]">Client's Email</label>
                                         <div class="mt-2">
-                                             <input id="email" on:input={ (event) => { validateForm("to-email", "to", "email", event) } } value={ invoice?.billToAddress?.email } name="email" type="email" autocomplete="email" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input id="email" on:input={ (event) => { validateForm("to-email", "to", "email", event) } } value={ invoice?.billToAddress?.email } name="email" type="email" autocomplete="email" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.to.email}</p>
                                    </div>
 
                                    <div class="col-span-full">
-                                        <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
+                                        <label for="street-address" class="block text-13 text-[#7E87C4]">Street address</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("to-street", "to", "street", event) } } value={ invoice?.billToAddress?.street } name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("to-street", "to", "street", event) } } value={ invoice?.billToAddress?.street } name="street-address" id="street-address" autocomplete="street-address" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.to.street}</p>
                                    </div>
 
                                    <div class="sm:col-span-2 sm:col-start-1">
-                                        <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
+                                        <label for="city" class="block text-13 text-[#7E87C4]">City</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("to-city", "to", "city", event) } } value={ invoice?.billToAddress?.city } name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("to-city", "to", "city", event) } } value={ invoice?.billToAddress?.city } name="city" id="city" autocomplete="address-level2" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.to.city}</p>
                                    </div>
 
                                    <div class="sm:col-span-2">
-                                        <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
+                                        <label for="region" class="block text-13 text-[#7E87C4]">State / Province</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("to-state", "to", "state", event) } } value={ invoice?.billToAddress?.state } name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("to-state", "to", "state", event) } } value={ invoice?.billToAddress?.state } name="region" id="region" autocomplete="address-level1" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.to.state}</p>
                                    </div>
 
                                    <div class="sm:col-span-2">
-                                        <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
+                                        <label for="postal-code" class="block text-13 text-[#7E87C4]">ZIP / Postal code</label>
                                         <div class="mt-2">
-                                             <input type="text" on:input={ (event) => { validateForm("to-zip", "to", "zip", event) } } value={ invoice?.billToAddress?.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                             <input type="text" on:input={ (event) => { validateForm("to-zip", "to", "zip", event) } } value={ invoice?.billToAddress?.zip } maxlength="5" name="postal-code" id="postal-code" autocomplete="postal-code" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                         </div>
                                         <p class="text-red-500">{errors.to.zip}</p>
                                    </div>
                               </div>
 
-                              <div class="relative max-w-sm">
-                                   <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                   <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                              <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                   <div class="sm:col-span-3">
+                                        <label for="invoice-date" class="block text-13 text-[#7E87C4]">Invoice Date</label>
+                                        <div class="relative mt-2">
+                                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                             </div>
+                                             <DateInput bind:value={ date } format="MM-dd-yyyy" />
+                                        </div>
                                    </div>
-                                   <DateInput bind:value={ date } format="MM-dd-yyyy" />
+                           
+                                   <div class="sm:col-span-3">
+                                        <label for="invoice-date" class="block text-13 text-[#7E87C4]">Invoice Date</label>
+                                        <div class="relative mt-2">
+                                             <button on:click={ () => { showPaymentTerms = !showPaymentTerms } } type="button" class="relative bg-[#F9FAFE] w-full cursor-default rounded-md text-left py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+                                                  <span class="block truncate text-15">{ formFields.to.dueDateAnnouncement }</span>
+                                                  <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                       <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" /></svg>
+                                                  </span>
+                                             </button>
+                                             {#if showPaymentTerms}
+                                                  <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
+                                                       {#each {length: 60} as _, i}
+                                                            <li id="listbox-label[{i}]" class="text-gray-900 cursor-default select-none py-2 pl-3 pr-9" role="option" aria-selected="true">
+                                                                 <span class="font-normal block truncate" on:keydown={()=>{}} on:click={ (event) => { updatePaymentTerms(event) } }>{ i + 1 }</span>
+                                                            </li>
+                                                       {/each}
+                                                  </ul>
+                                             {/if}
+                                        </div>
+                                   </div>
                               </div>
 
-                              <div>
-                                   <label for="listbox-label" class="block text-sm font-medium leading-6 text-gray-900">Assigned to</label>
-                                   <div class="relative mt-2">
-                                        <button on:click={ () => { showPaymentTerms = true } } type="button" class="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
-                                             <span class="block truncate">{ formFields.to.dueDateAnnouncement }</span>
-                                             <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                                                  <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z" clip-rule="evenodd" /></svg>
-                                             </span>
-                                        </button>
-                                        {#if showPaymentTerms}
-                                             <ul class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-                                                  <!--
-                                                  Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-                                                  Highlighted: "bg-indigo-600 text-white", Not Highlighted: "text-gray-900"
-                                                  -->
-                                                  {#each {length: 60} as _, i}
-                                                       <li id="listbox-label[{i}]" class="text-gray-900 cursor-default select-none py-2 pl-3 pr-9" role="option" aria-selected="true">
-                                                            <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-                                                            <span class="font-normal block truncate" on:keydown={()=>{}} on:click={ (event) => { updatePaymentTerms(event) } }>{ i + 1 }</span>
-                                                       </li>
-                                                  {/each}
-                                             </ul>
-                                        {/if}
-                                   </div>
-                              </div>
-
-                              <div>
-                                   <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Project Description</label>
+                              <div class="mt-6">
+                                   <label for="description" class="block text-13 text-[#7E87C4]">Project Description</label>
                                    <div class="mt-2">
-                                        <input type="text" on:input={ (event) => { validateForm("to-description", "to", "description", event) } } value={ invoice?.billToAddress?.description } name="description" id="description" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <input type="text" on:input={ (event) => { validateForm("to-description", "to", "description", event) } } value={ invoice?.billToAddress?.description } name="description" id="description" class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600">
                                    </div>
                                    <p class="text-red-500">{errors.to.description}</p>
                               </div>
-                              
                          </div>
 
-                         <div class="border-b border-gray-900/10 pb-12">
-                              <h2 class="text-base font-semibold leading-7 text-gray-900">Item List</h2>
-                              
+                         <div class="pb-4">
+                              <h2 class="font-bold text-15 text-[#7C5DFA]">Item List</h2>
                               <div class="mt-5">
-                                   <span class="block text-xs font-bold leading-6 text-[#828FA3]">Columns</span>
                                    <div class="mt-2 space-y-4">
+                                        <div class="flex items-center space-x-4">
+                                             <label for="item-name" class="block w-full text-13 text-[#7E87C4]">Item Name</label>
+                                             <label for="qty" class="block w-full text-13 text-[#7E87C4]">Qty.</label>
+                                             <label for="price" class="block w-full text-13 text-[#7E87C4]">Price</label>
+                                             <label for="total" class="block w-full text-13 text-[#7E87C4]">Total</label>
+                                        </div>
                                         {#each invoice.billToAddress.items as item, i}
                                              <div class="flex items-center space-x-4">
-                                                  <input type="text" on:input={ (event) => { validateForm("item-name", false, false, event) } } value={ item?.name } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo">
-                                                  <input type="text" on:input={ (event) => { validateForm("item-qty", false, false, event) } } value={ item?.qty } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo">
-                                                  <input type="text" on:input={ (event) => { validateForm("item-price", false, false, event) } } value={ item?.price } class="block w-full bg-transparent rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="e.g. ToDo">
+                                                  <input id="item-name" type="text" on:input={ (event) => { validateForm("item-name", false, false, event) } } value={ item?.name } class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600" placeholder="e.g. ToDo">
+                                                  <input id="qty" type="text" on:input={ (event) => { validateForm("item-qty", false, false, event) } } value={ item?.qty } class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600" placeholder="e.g. ToDo">
+                                                  <input id="price" type="text" on:input={ (event) => { validateForm("item-price", false, false, event) } } value={ item?.price } class="block bg-[#F9FAFE] w-full rounded-md border-0 py-3 px-5 font-bold text-15 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600" placeholder="e.g. ToDo">
+                                                  <div id="total" class="w-full font-bold text-15 text-[#888EB0]">${ item?.total.toLocaleString("en-US") }</div>
                                              </div>
                                         {/each}
                                         <p class="text-red-500">{errors.items.name}</p>
@@ -480,10 +485,10 @@
                               </div>
                          </div>
                     </div>
-               
-                    <div class="mt-6 flex items-center justify-end gap-x-6">
-                         <button on:click={ () => { showForm = false } } type="button" class="text-sm font-semibold leading-6 text-gray-900">Discard</button>
-                         <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save & Send</button>
+                    
+                    <div class="sticky bottom-0 left-0 bg-white w-full h-[6.875rem] px-14 flex items-center justify-end gap-x-6">
+                         <button on:click={ () => { showForm = false } } type="button" class="rounded-full bg-[#F9FAFE] w-[6rem] h-[3rem] text-15 font-bold text-[#7D88C2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Discard</button>
+                         <button type="submit" class="rounded-full bg-[#7C5DFA] w-[8.625rem] h-[3rem] text-15 font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save Changes</button>
                     </div>
                </form>
           {/if}

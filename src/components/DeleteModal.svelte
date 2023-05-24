@@ -12,7 +12,7 @@
      From: "opacity-100"
      To: "opacity-0"
      -->
-     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+     <div class="fixed inset-0 bg-black bg-opacity-25 transition-opacity"></div>
      <div class="fixed inset-0 z-10 overflow-y-auto">
           <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0" on:keydown={()=>{}} on:click|self={ () => { delteModal = false } }>
                <!--
