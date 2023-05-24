@@ -74,7 +74,7 @@
      }
 </script>
 
-<main on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="px-6 w-full max-w-[45.625rem] mx-auto">
+<main on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="px-6 w-full max-w-[45.625rem] md:max-w-[52rem] mx-auto" style="height: 100vh; overflow-y: auto;">
      <section on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="flex justify-between items-center my-8 md:my-[3.8125rem]">
           <div>
                <h1 class="font-bold text-[#0C0E16] dark:text-white text-2xl md:text-4xl leading-[1.5625rem]">Invoices</h1>
@@ -128,7 +128,7 @@
           <Form bind:showForm={showForm} />
      {/if}
 
-     <div class="space-y-4">
+     <section class="space-y-4" style="margin-bottom: 200px;">
           {#if $preferences.length == 0}
                <div class="flex flex-col justify-center items-center mt-[6.25rem] md:mt-[13.5rem] text-center">
                     <img src="/illustration-empty.svg" alt="empty" class="h-[10rem] md:h-auto">
@@ -177,5 +177,5 @@
                     </div>
                {/if}
           {/each}
-     </div>
+     </section>
 </main>
