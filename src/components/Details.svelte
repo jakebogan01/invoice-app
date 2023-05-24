@@ -43,9 +43,9 @@
                          <Status invoice={ invoice } />
                     </div>
                     <div class="hidden md:flex items-center justify-between space-x-2">
-                         <Button on:click={ () => { editInvoice = true } } style="flex justify-center items-center w-[4.5625rem] h-12 bg-[#F9FAFE] dark:bg-[#252945] font-bold text-15 text-[#7E88C3] dark:text-white rounded-full">Edit</Button>
-                         <Button on:click={ () => { delteModal = true } } style="flex justify-center items-center w-[5.5625rem] h-12 bg-[#EC5757] font-bold text-15 text-white rounded-full">Delete</Button>
-                         <Button on:click={ handleUpdateStatusToPaid } style="flex justify-center items-center w-[9.3125rem] h-12 bg-[#7C5DFA] font-bold text-15 text-white rounded-full">Mark as Paid</Button>
+                         <Button on:click={ () => { editInvoice = true } } style="flex justify-center items-center w-[4.5625rem] h-12 bg-[#F9FAFE] dark:bg-[#252945] hover:bg-[#DFE3FA] dark:hover:bg-white dark:hover:text-[#7E88C3] font-bold text-15 text-[#7E88C3] dark:text-white rounded-full">Edit</Button>
+                         <Button on:click={ () => { delteModal = true } } style="flex justify-center items-center w-[5.5625rem] h-12 bg-[#EC5757] hover:bg-[#FF9797] font-bold text-15 text-white rounded-full">Delete</Button>
+                         <Button on:click={ handleUpdateStatusToPaid } style="flex justify-center items-center w-[9.3125rem] h-12 bg-[#7C5DFA] hover:bg-[#9277FF] font-bold text-15 text-white rounded-full">Mark as Paid</Button>
                     </div>
                </div>
 
