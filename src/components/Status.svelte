@@ -3,7 +3,7 @@
      export let margin = "";
 </script>
 
-<span class="text-13 text-[#858BB2]">Status</span>
+<span class="text-13 text-[#858BB2] dark:text-white">Status</span>
 {#if invoice?.status == "pending"}
      <div class="flex justify-center items-center bg-[#FFF9F0] dark:bg-[#2B2736] font-bold text-15 text-[#FF8F00] w-[6.5rem] h-10 { margin } rounded-md">
           <div class="bg-[#FF8F00] w-2 h-2 rounded-full"></div>

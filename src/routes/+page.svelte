@@ -145,7 +145,7 @@
                                         <div class="md:flex items-center md:h-10 md:space-x-12">
                                              <p class="font-bold text-15 text-[#7D88C2] md:max-w-[3.625rem]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
                                              <p class="text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5 md:mt-0 md:max-w-[6.25rem]">Due { invoice?.billToAddress?.dueDate }</p>
-                                             <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2 md:mt-0 min-w-[8.75rem]">$ { amount[i] }</p>
+                                             <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2 md:mt-0 min-w-[8.75rem]">${ amount[i] }</p>
                                         </div>
                                         <div class="relative md:flex items-center md:space-x-12 md:pr-4">
                                              <p class="text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
@@ -164,7 +164,7 @@
                               <div class="md:flex items-center md:h-10 md:space-x-12">
                                    <p class="font-bold text-15 text-[#7D88C2] md:max-w-[3.625rem]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
                                    <p class="text-13 text-[#7E88C3] dark:text-[#DFE3FA] mt-5 md:mt-0 md:max-w-[6.25rem]">Due { invoice?.billToAddress?.dueDate }</p>
-                                   <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2 md:mt-0 min-w-[8.75rem]">$ { amount[i] }</p>
+                                   <p class="font-bold text-15 text-[#0C0E16] dark:text-white mt-2 md:mt-0 min-w-[8.75rem]">${ amount[i] }</p>
                               </div>
                               <div class="relative md:flex items-center md:space-x-12 md:pr-4">
                                    <p class="text-13 text-[#858BB2] dark:text-white">{ invoice?.billToAddress?.name }</p>
