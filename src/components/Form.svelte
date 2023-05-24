@@ -440,7 +440,7 @@
                                    </div>
                            
                                    <div class="sm:col-span-3">
-                                        <label for="invoice-date" class="block text-13 text-[#7E87C4] dark:text-[#DFE3FA]">Invoice Date</label>
+                                        <label for="invoice-date" class="block text-13 text-[#7E87C4] dark:text-[#DFE3FA]">Due Date</label>
                                         <div class="relative mt-2">
                                              <button on:click={ () => { showPaymentTerms = !showPaymentTerms } } type="button" class="relative bg-[#F9FAFE] dark:bg-[#1F2139] w-full cursor-default rounded-md text-left py-3 px-5 font-base text-15 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-[#252945] focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-white" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                                                   <span class="block truncate text-15">{ formFields.to.dueDateAnnouncement }</span>
@@ -613,7 +613,7 @@
                          </div>
                  
                          <div class="sm:col-span-3">
-                              <label for="invoice-date" class="block text-13 text-[#7E87C4] dark:text-[#DFE3FA]">Invoice Date</label>
+                              <label for="invoice-date" class="block text-13 text-[#7E87C4] dark:text-[#DFE3FA]">Due Date</label>
                               <div class="relative mt-2">
                                    <button on:click={ () => { showPaymentTerms = !showPaymentTerms } } type="button" class="relative bg-[#F9FAFE] dark:bg-[#1F2139] w-full cursor-default rounded-md text-left py-3 px-5 font-base text-15 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-[#252945] focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-white" aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
                                         <span class="block truncate text-15">{ formFields.to.dueDateAnnouncement }</span>

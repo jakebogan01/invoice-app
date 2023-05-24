@@ -74,8 +74,8 @@
                               <h3 class="mb-1">Bill To</h3>
                               <p class="font-bold text-15 text-[#0C0E16] dark:text-white mb-1">{ invoice?.billToAddress?.name ? invoice?.billToAddress?.name : "Missing" }</p>
                               
-                              <p>{ invoice?.billFromAddress?.street ? invoice?.billFromAddress?.street : "Missing" }</p>
-                              <p>{ invoice?.billFromAddress?.city ? invoice?.billFromAddress?.city : "Missing" }, { invoice?.billFromAddress?.state ? invoice?.billFromAddress?.state : "Missing" }, { invoice?.billFromAddress?.zip ? invoice?.billFromAddress?.zip : "Missing" }</p>
+                              <p>{ invoice?.billToAddress?.street ? invoice?.billToAddress?.street : "Missing" }</p>
+                              <p>{ invoice?.billToAddress?.city ? invoice?.billToAddress?.city : "Missing" }, { invoice?.billToAddress?.state ? invoice?.billToAddress?.state : "Missing" }, { invoice?.billToAddress?.zip ? invoice?.billToAddress?.zip : "Missing" }</p>
                          </div>
                          <div>
                               <h3 class="mb-1">Sent to</h3>
