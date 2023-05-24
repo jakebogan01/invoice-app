@@ -41,7 +41,7 @@ body {
      border: 1px solid rgb(209 213 219) !important;
      color: rgb(17, 24, 39) !important;
      font-size: 0.9375rem !important;
-     font-weight: 700 !important;
+     font-weight: 400 !important;
      line-height: 1.25rem !important;
      border-radius: 0.5rem !important;
 }
@@ -58,7 +58,7 @@ body {
      border: 1px solid #252945 !important;
      color: rgb(255, 255, 255) !important;
      font-size: 0.9375rem !important;
-     font-weight: 700 !important;
+     font-weight: 400 !important;
      line-height: 1.25rem !important;
      border-radius: 0.5rem !important;
 }
