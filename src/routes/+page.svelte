@@ -155,7 +155,7 @@
                {#if startFiltering}
                     {#each filterArray as status}
                          {#if status == invoice?.status}
-                              <div class="bg-white dark:bg-[#1F2139] rounded-lg md:shadow-sm overflow-hidden">
+                              <div class="bg-white dark:bg-[#1F2139] rounded-lg md:shadow-sm overflow-hidden border border-transparent hover:border-[#7C5DFA]">
                                    <a href="/{ invoice?.slug }" class="flex justify-between items-start py-7 md:py-4 px-6">
                                         <div class="md:flex items-center md:h-10 md:space-x-12">
                                              <p class="font-bold text-15 text-[#7D88C2] md:max-w-[3.625rem]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
@@ -174,7 +174,7 @@
                          {/if}
                     {/each}
                {:else}
-                    <div class="bg-white dark:bg-[#1F2139] rounded-lg md:shadow-sm overflow-hidden border border-white hover:border-[#7C5DFA]">
+                    <div class="bg-white dark:bg-[#1F2139] rounded-lg md:shadow-sm overflow-hidden border border-transparent hover:border-[#7C5DFA]">
                          <a href="/{ invoice?.slug }" class="flex justify-between items-start py-7 md:py-4 px-6">
                               <div class="md:flex items-center md:h-10 md:space-x-12">
                                    <p class="font-bold text-15 text-[#7D88C2] md:max-w-[3.625rem]">#<span class="text-[#0C0E16] dark:text-white">{ invoice?.slug }</span></p>
