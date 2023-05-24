@@ -98,18 +98,33 @@
                          </h3>
                          {#if openFilter}
                               <div class="absolute top-12 right-0 bg-white dark:bg-[#252945] shadow-lg w-[12rem] p-6 text-15 font-bold text-[#1F2139] dark:text-white rounded-xl space-y-4 z-10" id="filter-section-0">
-                                   <div class="flex items-center">
-                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
-                                        <label for="filter-mobile-category-0" class="ml-3">Paid</label>
-                                   </div>
-                                   <div class="flex items-center">
-                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
-                                        <label for="filter-mobile-category-1" class="ml-3">Pending</label>
-                                   </div>
-                                   <div class="flex items-center">
-                                        <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
-                                        <label for="filter-mobile-category-3" class="ml-3">Draft</label>
-                                   </div>
+                                   {#if $preferences.length < 1}
+                                        <div class="flex items-center">
+                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]" disabled>
+                                             <label for="filter-mobile-category-0" class="ml-3">Paid</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]" disabled>
+                                             <label for="filter-mobile-category-1" class="ml-3">Pending</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]" disabled>
+                                             <label for="filter-mobile-category-3" class="ml-3">Draft</label>
+                                        </div>
+                                   {:else}
+                                        <div class="flex items-center">
+                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.paid } id="filter-mobile-category-0" name="paid" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                             <label for="filter-mobile-category-0" class="ml-3">Paid</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.pending } id="filter-mobile-category-1" name="pending" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                             <label for="filter-mobile-category-1" class="ml-3">Pending</label>
+                                        </div>
+                                        <div class="flex items-center">
+                                             <input on:change={ handleCheckbox } bind:value={ checkboxValues.draft } id="filter-mobile-category-2" name="draft" type="checkbox" class="h-4 w-4 rounded border-[#7C5DFA] bg-[#DFE3FA] dark:bg-[#1F2139] text-[#7C5DFA] focus:ring-[#7C5DFA]">
+                                             <label for="filter-mobile-category-3" class="ml-3">Draft</label>
+                                        </div>
+                                   {/if}
                               </div>
                          {/if}
                     </div>
