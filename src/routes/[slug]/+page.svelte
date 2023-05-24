@@ -38,20 +38,19 @@
           <span class="pt-0.5">Go back</span>
      </a>
 
-     <div class="flex items-center justify-between px-4">
-          <Button on:click={ () => { editInvoice = true } } style="bg-green-500">Edit</Button>
-          <Button on:click={ () => { delteModal = true } }>Delete</Button>
-          <Button on:click={ handleUpdateStatusToPaid } style="bg-purple-500">Mark as Paid</Button>
-     </div>
-
      {#if editInvoice}
           <Form bind:showForm={editInvoice} editInvoice={editInvoice} data={data} />
      {/if}
-
+     
      {#if delteModal}
           <DeleteModal bind:delteModal={ delteModal } on:click={ handleDeleteInvoice } />
      {/if}
-
+     
      <Details data={ data } />
-
+     
+     <div class="absolute left-0 bottom-0 flex items-center justify-between bg-white w-full h-[5.6875rem] px-6">
+          <Button on:click={ () => { editInvoice = true } } style="flex justify-center items-center w-[4.5625rem] h-12 bg-[#F9FAFE] font-bold text-15 text-[#7E88C3] rounded-full">Edit</Button>
+          <Button on:click={ () => { delteModal = true } } style="flex justify-center items-center w-[5.5625rem] h-12 bg-[#EC5757] font-bold text-15 text-white rounded-full">Delete</Button>
+          <Button on:click={ handleUpdateStatusToPaid } style="flex justify-center items-center w-[9.3125rem] h-12 bg-[#7C5DFA] font-bold text-15 text-white rounded-full">Mark as Paid</Button>
+     </div>
 </main>
