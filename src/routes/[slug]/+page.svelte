@@ -43,7 +43,7 @@
      </a>
      
      {#if delteModal}
-          <DeleteModal bind:delteModal={ delteModal } on:click={ handleDeleteInvoice } />
+          <DeleteModal bind:delteModal={ delteModal } on:click={ handleDeleteInvoice } data={data} />
      {/if}
      
      <Details data={ data } bind:editInvoice={editInvoice} bind:delteModal={delteModal} />

@@ -74,6 +74,10 @@
      }
 </script>
 
+{#if showForm}
+     <Form bind:showForm={showForm} />
+{/if}
+
 <main on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="px-6 w-full max-w-[45.625rem] md:max-w-[52rem] mx-auto" style="height: 100vh; overflow-y: auto;">
      <section on:keydown={()=>{}} on:click|self={ () => { openFilter = false } } class="flex justify-between items-center my-8 md:my-[3.8125rem]">
           <div>
@@ -138,10 +142,6 @@
                </button>
           </div>
      </section>
-
-     {#if showForm}
-          <Form bind:showForm={showForm} />
-     {/if}
 
      <section class="space-y-4" style="margin-bottom: 200px;">
           {#if $preferences.length == 0}
