@@ -1,6 +1,7 @@
 <script>
      import { onMount } from "svelte";
      import { preferences } from "../stores/invoicesStore";
+     import Status from "./Status.svelte";
      export let data;
 
      let amount;
@@ -20,9 +21,13 @@
      })
 </script>
 
-<div class="space-y-4 px-4 bg-gray-900 text-white min-h-screen">
+<div class="space-y-4 bg-gray-900 text-white min-h-screen">
      {#each $preferences as invoice}
           {#if invoice?.slug === data?.slug}
+               <div class="flex justify-between items-center bg-white p-6 rounded-lg overflow-hidden">
+                    <Status invoice={ invoice } />
+               </div>
+
                <div>
                     <p>UniqueID: #{ invoice?.slug }</p>
                     <p>ID: { invoice?.id }</p>
