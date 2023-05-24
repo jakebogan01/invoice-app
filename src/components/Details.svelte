@@ -114,7 +114,7 @@
                                              <p class="font-bold text-15 text-[#7E88C3]">{ item?.qty ? item?.qty : "0" } x ${ item?.price ? item?.price : "0" }</p>
                                         </div>
                                         <div>
-                                             <p class="font-bold text-15 text-[#0C0E16] dark:text-white">$ { item?.total ? item?.total : "0" }</p>
+                                             <p class="font-bold text-15 text-[#0C0E16] dark:text-white">$ { item?.total ? item?.total.toLocaleString("en-US")  : "0" }</p>
                                         </div>
                                    </div>
                               {/each}

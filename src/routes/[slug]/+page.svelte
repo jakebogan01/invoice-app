@@ -48,7 +48,7 @@
      
      <Details data={ data } bind:editInvoice={editInvoice} bind:delteModal={delteModal} />
      
-     <div class="md:hidden absolute left-0 bottom-0 flex items-center justify-between space-x-2 bg-white dark:bg-[#1F2139] w-full h-[5.6875rem] px-6">
+     <div class="md:hidden absolute left-0 bottom-0 flex items-center justify-between space-x-2 bg-white dark:bg-[#1F2139] w-full h-[6.875rem] px-6">
           <Button on:click={ () => { editInvoice = true } } style="flex justify-center items-center w-[4.5625rem] h-12 bg-[#F9FAFE] dark:bg-[#252945] font-bold text-15 text-[#7E88C3] dark:text-white rounded-full">Edit</Button>
           <Button on:click={ () => { delteModal = true } } style="flex justify-center items-center w-[5.5625rem] h-12 bg-[#EC5757] font-bold text-15 text-white rounded-full">Delete</Button>
           <Button on:click={ handleUpdateStatusToPaid } style="flex justify-center items-center w-[9.3125rem] h-12 bg-[#7C5DFA] font-bold text-15 text-white rounded-full">Mark as Paid</Button>

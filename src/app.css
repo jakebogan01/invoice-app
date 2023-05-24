@@ -29,17 +29,34 @@ body {
 body {
      background-color: #f8f8fb;
 }
-.date-time-field {
+.light-date .date-time-field {
      position: static !important;
 }
-.date-time-field input {
+.light-date .date-time-field input {
      display: block !important;
      width: 100% !important;
      padding: 0.875rem 0 !important;
      background-color: #f9fafe !important;
      padding-left: 2.5rem !important;
      border: 1px solid rgb(209 213 219) !important;
-     color: rgb(17 24 39) !important;
+     color: rgb(17, 24, 39) !important;
+     font-size: 0.9375rem !important;
+     font-weight: 700 !important;
+     line-height: 1.25rem !important;
+     border-radius: 0.5rem !important;
+}
+
+.dark-date .date-time-field {
+     position: static !important;
+}
+.dark-date .date-time-field input {
+     display: block !important;
+     width: 100% !important;
+     padding: 0.875rem 0 !important;
+     background-color: #1f2139 !important;
+     padding-left: 2.5rem !important;
+     border: 1px solid #252945 !important;
+     color: rgb(255, 255, 255) !important;
      font-size: 0.9375rem !important;
      font-weight: 700 !important;
      line-height: 1.25rem !important;
